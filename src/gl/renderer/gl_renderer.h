@@ -78,6 +78,7 @@ public:
 
 	FFlatVertexBuffer *mVBO;
 
+	GL_IRECT mScreenViewport;
 	GL_IRECT mOutputViewportLB;
 	GL_IRECT mOutputViewport;
 

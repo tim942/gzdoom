@@ -155,7 +155,7 @@ void FGLRenderer::SetViewArea()
 
 void FGLRenderer::Reset3DViewport()
 {
-	glViewport(mOutputViewport.left, mOutputViewport.top, mOutputViewport.width, mOutputViewport.height);
+	glViewport(mScreenViewport.left, mScreenViewport.top, mScreenViewport.width, mScreenViewport.height);
 }
 
 //-----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void FGLRenderer::Reset3DViewport()
 
 void FGLRenderer::Set3DViewport()
 {
-	const auto &bounds = mOutputViewportLB;
+	const auto &bounds = mSceneViewport;
 
 	glViewport(bounds.left, bounds.top, bounds.width, bounds.height);
 	glScissor(bounds.left, bounds.top, bounds.width, bounds.height);

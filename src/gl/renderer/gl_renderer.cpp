@@ -70,6 +70,8 @@
 
 EXTERN_CVAR(Int, screenblocks)
 
+CVAR(Bool, gl_scale_viewport, true, 0);
+
 //===========================================================================
 // 
 // Renderer interface
@@ -135,16 +137,14 @@ void FGLRenderer::SetOutputViewport(GL_IRECT *bounds)
 {
 	if (bounds)
 	{
-		mOutputViewport = *bounds;
-		mOutputViewportLB = *bounds;
+		mSceneViewport = *bounds;
 		mScreenViewport = *bounds;
+		mOutputLetterbox = *bounds;
 		return;
 	}
 
-	int height, width;
-
 	// Special handling so the view with a visible status bar displays properly
-
+	int height, width;
 	if (screenblocks >= 10)
 	{
 		height = framebuffer->GetHeight();
@@ -156,29 +156,61 @@ void FGLRenderer::SetOutputViewport(GL_IRECT *bounds)
 		width = (screenblocks*framebuffer->GetWidth() / 10);
 	}
 
-	int trueheight = framebuffer->GetTrueHeight();	// ugh...
-	int bars = (trueheight - framebuffer->GetHeight()) / 2;
-
-	int vw = realviewwidth;
-	int vh = realviewheight;
+	// Back buffer letterbox for the final output
+	int clientWidth = framebuffer->GetClientWidth();
+	int clientHeight = framebuffer->GetClientHeight();
+	int screenWidth = framebuffer->GetWidth();
+	int screenHeight = framebuffer->GetHeight();
+	float scale = MIN(clientWidth / (float)screenWidth, clientHeight / (float)screenHeight);
+	mOutputLetterbox.width = (int)round(screenWidth * scale);
+	mOutputLetterbox.height = (int)round(screenHeight * scale);
+	mOutputLetterbox.left = (clientWidth - mOutputLetterbox.width) / 2;
+	mOutputLetterbox.top = (clientHeight - mOutputLetterbox.height) / 2;
 
 	// The entire renderable area, including the 2D HUD
 	mScreenViewport.left = 0;
 	mScreenViewport.top = 0;
-	mScreenViewport.width = framebuffer->GetWidth();
-	mScreenViewport.height = framebuffer->GetHeight();
+	mScreenViewport.width = screenWidth;
+	mScreenViewport.height = screenHeight;
 
-	// Letterboxed viewport for the main scene
-	mOutputViewportLB.left = viewwindowx;
-	mOutputViewportLB.top = trueheight - bars - (height + viewwindowy - ((height - vh) / 2));
-	mOutputViewportLB.width = vw;
-	mOutputViewportLB.height = height;
+	// Viewport for the 3D scene
+	mSceneViewport.left = viewwindowx;
+	mSceneViewport.top = screenHeight - (height + viewwindowy - ((height - realviewheight) / 2));
+	mSceneViewport.width = realviewwidth;
+	mSceneViewport.height = height;
 
-	// Entire canvas for player sprites
-	mOutputViewport.left = 0;
-	mOutputViewport.top = (trueheight - framebuffer->GetHeight()) / 2;
-	mOutputViewport.width = framebuffer->GetWidth();
-	mOutputViewport.height = framebuffer->GetHeight();
+	// Scale viewports to fit letterbox
+	if (gl_scale_viewport)
+	{
+		mScreenViewport.width = mOutputLetterbox.width;
+		mScreenViewport.height = mOutputLetterbox.height;
+		mSceneViewport.left = (int)round(mSceneViewport.left * scale);
+		mSceneViewport.top = (int)round(mSceneViewport.top * scale);
+		mSceneViewport.width = (int)round(mSceneViewport.width * scale);
+		mSceneViewport.height = (int)round(mSceneViewport.height * scale);
+
+		// Without render buffers we have to render directly to the letterbox
+		mScreenViewport.left += mOutputLetterbox.left;
+		mScreenViewport.top += mOutputLetterbox.top;
+		mSceneViewport.left += mOutputLetterbox.left;
+		mSceneViewport.top += mOutputLetterbox.top;
+	}
+}
+
+//===========================================================================
+// 
+// Calculates the OpenGL window coordinates for a zdoom screen position
+//
+//===========================================================================
+
+int FGLRenderer::ScreenToWindowX(int x)
+{
+	return mScreenViewport.left + (int)round(x * mScreenViewport.width / (float)framebuffer->GetWidth());
+}
+
+int FGLRenderer::ScreenToWindowY(int y)
+{
+	return mScreenViewport.top + mScreenViewport.height - (int)round(y * mScreenViewport.height / (float)framebuffer->GetHeight());
 }
 
 //===========================================================================
@@ -195,6 +227,8 @@ void FGLRenderer::SetupLevel()
 void FGLRenderer::Begin2D()
 {
 	glViewport(mScreenViewport.left, mScreenViewport.top, mScreenViewport.width, mScreenViewport.height);
+	glScissor(mScreenViewport.left, mScreenViewport.top, mScreenViewport.width, mScreenViewport.height);
+
 	gl_RenderState.EnableFog(false);
 	gl_RenderState.Set2DMode(true);
 }
@@ -305,52 +339,6 @@ unsigned char *FGLRenderer::GetTextureBuffer(FTexture *tex, int &w, int &h)
 		return gltex->CreateTexBuffer(CM_DEFAULT, 0, w, h);
 	}
 	return NULL;
-}
-
-//===========================================================================
-// 
-//
-//
-//===========================================================================
-
-void FGLRenderer::ClearBorders()
-{
-	OpenGLFrameBuffer *glscreen = static_cast<OpenGLFrameBuffer*>(screen);
-
-	// Letterbox time! Draw black top and bottom borders.
-	int width = glscreen->GetWidth();
-	int height = glscreen->GetHeight();
-	int trueHeight = glscreen->GetTrueHeight();
-
-	int borderHeight = (trueHeight - height) / 2;
-
-	glViewport(0, 0, width, trueHeight);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0.0, width * 1.0, 0.0, trueHeight, -1.0, 1.0);
-	glMatrixMode(GL_MODELVIEW);
-	glColor3f(0.f, 0.f, 0.f);
-	gl_RenderState.Set2DMode(true);
-	gl_RenderState.EnableTexture(false);
-	gl_RenderState.Apply(true);
-
-	glBegin(GL_QUADS);
-	// upper quad
-	glVertex2i(0, borderHeight);
-	glVertex2i(0, 0);
-	glVertex2i(width, 0);
-	glVertex2i(width, borderHeight);
-
-	// lower quad
-	glVertex2i(0, trueHeight);
-	glVertex2i(0, trueHeight - borderHeight);
-	glVertex2i(width, trueHeight - borderHeight);
-	glVertex2i(width, trueHeight);
-	glEnd();
-
-	gl_RenderState.EnableTexture(true);
-
-	glViewport(0, (trueHeight - height) / 2, width, height); 
 }
 
 //==========================================================================

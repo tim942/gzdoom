@@ -199,7 +199,7 @@ void OpenGLFrameBuffer::Update()
 	Unlock();
 	CheckBench();
 
-	if (Windowed)
+	if (!IsFullscreen())
 	{
 		int clientWidth = GetClientWidth();
 		int clientHeight = GetClientHeight();

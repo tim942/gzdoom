@@ -70,7 +70,7 @@
 
 EXTERN_CVAR(Int, screenblocks)
 
-CVAR(Bool, gl_scale_viewport, true, 0);
+CVAR(Bool, gl_scale_viewport, true, CVAR_ARCHIVE);
 
 //===========================================================================
 // 

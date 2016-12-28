@@ -180,7 +180,7 @@ void FGLRenderer::SetOutputViewport(GL_IRECT *bounds)
 	mSceneViewport.height = height;
 
 	// Scale viewports to fit letterbox
-	if (gl_scale_viewport)
+	if (gl_scale_viewport && !framebuffer->IsFullscreen())
 	{
 		mScreenViewport.width = mOutputLetterbox.width;
 		mScreenViewport.height = mOutputLetterbox.height;

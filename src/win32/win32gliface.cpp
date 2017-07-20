@@ -1,5 +1,6 @@
 //#include "gl/system/gl_system.h"
 
+#define _WIN32_WINNT 0x0501
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <GL/gl.h>
@@ -21,6 +22,7 @@
 #include "v_text.h"
 #include "m_argv.h"
 #include "doomerrors.h"
+#include "optwin32.h"
 //#include "gl_defs.h"
 
 #include "gl/renderer/gl_renderer.h"
@@ -183,10 +185,13 @@ struct MonitorEnumState
 
 static BOOL CALLBACK GetDisplayDeviceNameMonitorEnumProc(HMONITOR hMonitor, HDC, LPRECT, LPARAM dwData)
 {
+	using OptWin32::GetMonitorInfoA;
+
 	MonitorEnumState *state = reinterpret_cast<MonitorEnumState *>(dwData);
 
 	MONITORINFOEX mi;
 	mi.cbSize = sizeof mi;
+	assert (GetMonitorInfo);
 	GetMonitorInfo(hMonitor, &mi);
 
 	// This assumes the monitors are returned by EnumDisplayMonitors in the
@@ -212,6 +217,8 @@ static BOOL CALLBACK GetDisplayDeviceNameMonitorEnumProc(HMONITOR hMonitor, HDC,
 
 void Win32GLVideo::GetDisplayDeviceName()
 {
+	using OptWin32::GetMonitorInfoA;
+
 	// If anything goes wrong, anything at all, everything uses the primary
     // monitor.
 	m_DisplayDeviceName = 0;
@@ -231,6 +238,7 @@ void Win32GLVideo::GetDisplayDeviceName()
 
 			mi.cbSize = sizeof mi;
 
+			assert (GetMonitorInfo);
 			if (GetMonitorInfo(mes.hFoundMonitor, &mi))
 			{
 				strcpy(m_DisplayDeviceBuffer, mi.szDevice);
@@ -503,6 +511,8 @@ struct DumpAdaptersState
 
 static BOOL CALLBACK DumpAdaptersMonitorEnumProc(HMONITOR hMonitor, HDC, LPRECT, LPARAM dwData)
 {
+	using OptWin32::GetMonitorInfoA;
+
 	DumpAdaptersState *state = reinterpret_cast<DumpAdaptersState *>(dwData);
 
 	MONITORINFOEX mi;
@@ -512,6 +522,7 @@ static BOOL CALLBACK DumpAdaptersMonitorEnumProc(HMONITOR hMonitor, HDC, LPRECT,
 
 	bool active = true;
 
+	assert (GetMonitorInfo);
 	if (GetMonitorInfo(hMonitor, &mi))
 	{
 		bool primary = !!(mi.dwFlags & MONITORINFOF_PRIMARY);
@@ -950,6 +961,8 @@ IMPLEMENT_CLASS(Win32GLFrameBuffer, true, false)
 
 Win32GLFrameBuffer::Win32GLFrameBuffer(void *hMonitor, int width, int height, int bits, int refreshHz, bool fullscreen) : BaseWinFB(width, height) 
 {
+	using OptWin32::GetMonitorInfoA;
+
 	m_Width = width;
 	m_Height = height;
 	m_Bits = bits;
@@ -970,6 +983,7 @@ Win32GLFrameBuffer::Win32GLFrameBuffer(void *hMonitor, int width, int height, in
 		MONITORINFOEX mi;
 		mi.cbSize = sizeof mi;
 
+		assert (GetMonitorInfo);
 		if (GetMonitorInfo(HMONITOR(hMonitor), &mi))
 		{
 			strcpy(m_displayDeviceNameBuffer, mi.szDevice);

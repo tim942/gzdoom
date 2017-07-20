@@ -274,7 +274,7 @@ void FGLDebug::DebugCallback(GLenum source, GLenum type, GLuint id, GLenum sever
 
 	if (severity != GL_DEBUG_SEVERITY_NOTIFICATION)
 	{
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__MINGW32__)
 		DebugBreak();
 #else
 		raise(SIGTRAP);

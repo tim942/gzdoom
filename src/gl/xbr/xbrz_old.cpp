@@ -692,7 +692,7 @@ void scalePixel(const Kernel_3x3& ker,
         auto eq   = [&](uint32_t col1, uint32_t col2) { return colorDist(col1, col2, cfg.luminanceWeight_) < cfg.equalColorTolerance_; };
         auto dist = [&](uint32_t col1, uint32_t col2) { return colorDist(col1, col2, cfg.luminanceWeight_); };
 
-        const bool doLineBlend = [&]() -> bool
+        const bool doLineBlend = [&ker, &blend, &eq, &dist]() -> bool
         {
             if (getBottomR(blend) >= BLEND_DOMINANT)
                 return true;

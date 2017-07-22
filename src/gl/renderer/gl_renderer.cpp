@@ -268,8 +268,8 @@ void FGLRenderer::SetOutputViewport(GL_IRECT *bounds)
 
 	// Viewport for the 3D scene
 	mSceneViewport.left = viewwindowx;
-	mSceneViewport.top = screenHeight - (height + viewwindowy - ((height - viewheight) / 2));
-	mSceneViewport.width = viewwidth;
+	mSceneViewport.top = screenHeight - (height + viewwindowy - ((height - realviewheight) / 2));
+	mSceneViewport.width = realviewwidth;
 	mSceneViewport.height = height;
 
 	// Scale viewports to fit letterbox

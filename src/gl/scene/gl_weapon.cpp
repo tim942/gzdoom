@@ -88,8 +88,8 @@ void FGLRenderer::DrawPSprite (player_t * player,DPSprite *psp, float sx, float 
 
 	gl_RenderState.SetMaterial(tex, CLAMP_XY_NOMIP, 0, OverrideShader, alphatexture);
 
-	float vw = (float)viewwidth;
-	float vh = (float)viewheight;
+	float vw = (float)realviewwidth;
+	float vh = (float)realviewheight;
 
 	FloatRect r;
 	tex->GetSpriteRect(&r);

@@ -423,7 +423,7 @@ CCMD (take)
 CCMD (gameversion)
 {
 	//Printf ("%s @ %s\nCommit %s\n", GetVersionString(), GetGitTime(), GetGitHash());
-	Printf ("%s r2.1 : " __DATE__ "\n", GetVersionString());
+	Printf ("%s LE r2.2 : " __DATE__ "\n", GetVersionString());
 }
 
 CCMD (print)
@@ -1210,4 +1210,99 @@ CCMD(secret)
 			else inlevel = false;
 		}
 	}
+}
+
+CCMD(idkfa)
+{
+	if (CheckCheatmode ())
+		return;
+
+	Net_WriteByte (DEM_GENERICCHEAT);
+	Net_WriteByte (CHT_IDKFA);
+}
+
+CCMD(idfa)
+{
+	if (CheckCheatmode ())
+		return;
+
+	Net_WriteByte (DEM_GENERICCHEAT);
+	Net_WriteByte (CHT_IDFA);
+}
+
+CCMD(idbehold)
+{
+	if (CheckCheatmode ())
+		return;
+
+	if (argv.argc() != 2)
+	{
+		Printf("inVuln, Str, Inviso, Rad, Allmap, or Lite-amp\n");
+		return;
+	}
+	
+	switch (argv[1][0])
+	{
+		case 'v':
+			Net_WriteByte (DEM_GENERICCHEAT);
+			Net_WriteByte (CHT_BEHOLDV);
+			break;
+		case 's':
+			Net_WriteByte (DEM_GENERICCHEAT);
+			Net_WriteByte (CHT_BEHOLDS);
+			break;
+		case 'i':
+			Net_WriteByte (DEM_GENERICCHEAT);
+			Net_WriteByte (CHT_BEHOLDI);
+			break;
+		case 'r':
+			Net_WriteByte (DEM_GENERICCHEAT);
+			Net_WriteByte (CHT_BEHOLDR);
+			break;
+		case 'a':
+			Net_WriteByte (DEM_GENERICCHEAT);
+			Net_WriteByte (CHT_BEHOLDA);
+			break;
+		case 'l':
+			Net_WriteByte (DEM_GENERICCHEAT);
+			Net_WriteByte (CHT_BEHOLDL);
+			break;
+	}
+}
+
+EXTERN_CVAR (Int, am_cheat);
+
+CCMD(iddt)
+{
+	if (CheckCheatmode ())
+		return;
+	
+	am_cheat = (am_cheat + 1) % 3;
+}
+
+CCMD(idchoppers)
+{
+	if (CheckCheatmode ())
+		return;
+
+	Net_WriteByte (DEM_GENERICCHEAT);
+	Net_WriteByte (CHT_CHAINSAW);
+}
+
+CCMD(idclip)
+{
+	if (CheckCheatmode ())
+		return;
+
+	Net_WriteByte (DEM_GENERICCHEAT);
+	Net_WriteByte (CHT_NOCLIP);
+}
+
+EXTERN_CVAR(Float, r_spritedistancecull)
+EXTERN_CVAR(Float, r_linedistancecull)
+
+CCMD(nocull)
+{
+		r_spritedistancecull = 0.0;
+		r_linedistancecull = 0.0;
 }

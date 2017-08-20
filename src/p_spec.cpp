@@ -1544,6 +1544,8 @@ void DScroller::Tick ()
 {
 	fixed_t dx = m_dx, dy = m_dy, tdx, tdy;
 
+	msecnode_t *n;
+
 	if (m_Control != -1)
 	{	// compute scroll amounts based on a sector's height changes
 		fixed_t height = sectors[m_Control].CenterFloor () +
@@ -1601,6 +1603,11 @@ void DScroller::Tick ()
 		case sc_carry:
 			level.Scrolls[m_Affectee].ScrollX += dx;
 			level.Scrolls[m_Affectee].ScrollY += dy;
+			// mark all potentially affected things here so that the very expensive calculation loop in AActor::Tick does not need to run for actors which do not touch a scrolling sector.
+			for (n = sectors[m_Affectee].touching_thinglist; n; n = n->m_snext)
+			{
+				n->m_thing->flags8 |= MF8_INSCROLLSEC;
+			}
 			break;
 
 		case sc_carry_ceiling:       // to be added later

@@ -562,19 +562,19 @@ FUNC(LS_Ceiling_RaiseByValueTimes8)
 FUNC(LS_Ceiling_CrushAndRaise)
 // Ceiling_CrushAndRaise (tag, speed, crush, crushtype)
 {
-	return EV_DoCeiling (DCeiling::ceilCrushAndRaise, ln, arg0, SPEED(arg1), SPEED(arg1)/2, 0, arg2, 0, 0, CRUSHTYPE(arg3));
+	return EV_DoCeiling (DCeiling::ceilCrushAndRaise, ln, arg0, SPEED(arg1), SPEED(arg1)/2, 8*FRACUNIT, arg2, 0, 0, CRUSHTYPE(arg3));
 }
 
 FUNC(LS_Ceiling_LowerAndCrush)
 // Ceiling_LowerAndCrush (tag, speed, crush, crushtype)
 {
-	return EV_DoCeiling (DCeiling::ceilLowerAndCrush, ln, arg0, SPEED(arg1), SPEED(arg1), 0, arg2, 0, 0, CRUSHTYPE(arg3));
+	return EV_DoCeiling (DCeiling::ceilLowerAndCrush, ln, arg0, SPEED(arg1), SPEED(arg1), 8*FRACUNIT, arg2, 0, 0, CRUSHTYPE(arg3));
 }
 
 FUNC(LS_Ceiling_LowerAndCrushDist)
 // Ceiling_LowerAndCrush (tag, speed, crush, dist, crushtype)
 {
-	return EV_DoCeiling (DCeiling::ceilLowerAndCrushDist, ln, arg0, SPEED(arg1), SPEED(arg1), arg3*FRACUNIT, arg2, 0, 0, CRUSHTYPE(arg4));
+	return EV_DoCeiling (DCeiling::ceilLowerAndCrush, ln, arg0, SPEED(arg1), SPEED(arg1), arg3*FRACUNIT, arg2, 0, 0, CRUSHTYPE(arg4));
 }
 
 FUNC(LS_Ceiling_CrushStop)
@@ -586,7 +586,7 @@ FUNC(LS_Ceiling_CrushStop)
 FUNC(LS_Ceiling_CrushRaiseAndStay)
 // Ceiling_CrushRaiseAndStay (tag, speed, crush, crushtype)
 {
-	return EV_DoCeiling (DCeiling::ceilCrushRaiseAndStay, ln, arg0, SPEED(arg1), SPEED(arg1)/2, 0, arg2, 0, 0, CRUSHTYPE(arg3));
+	return EV_DoCeiling (DCeiling::ceilCrushRaiseAndStay, ln, arg0, SPEED(arg1), SPEED(arg1)/2, 8*FRACUNIT, arg2, 0, 0, CRUSHTYPE(arg3));
 }
 
 FUNC(LS_Ceiling_MoveToValueTimes8)
@@ -3123,8 +3123,8 @@ FUNC(LS_GlassBreak)
 
 			x = ln->v1->x + ln->dx/2;
 			y = ln->v1->y + ln->dy/2;
-			x += (ln->frontsector->soundorg[0] - x) / 5;
-			y += (ln->frontsector->soundorg[1] - y) / 5;
+			x += (ln->frontsector->centerspot.x - x) / 5;
+			y += (ln->frontsector->centerspot.y - y) / 5;
 
 			for (int i = 0; i < 7; ++i)
 			{

@@ -20,3 +20,5 @@ than 4.9.2.
  You can follow the following guide:
  https://zdoom.org/wiki/Compile_ZDoom_on_Windows
  
+ ZDoom LE has moved to https://github.com/drfrag666/gzdoom/tree/gzdoomle
+ 

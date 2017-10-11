@@ -601,6 +601,8 @@ OptionValue DetailModes
 	2.0, "Double Vertically"
 	3.0, "Double Horiz and Vert"
 	4.0, "Quad Horiz and Double Vert"
+	5.0, "Triple Horiz and Double Vert"
+	6.0, "Quad Horiz and Vert"
 }
 
 OptionValue ColumnMethods 
@@ -759,6 +761,10 @@ OptionValue TextColors
 	19.0, "\ctpurple"
 	20.0, "\cudark gray"
 	21.0, "\cvcyan"
+	22.0, "\cwice"
+	23.0, "\cxfire"
+	24.0, "\cysapphire"
+	25.0, "\czteal"
 }
 
 OptionValue Crosshairs

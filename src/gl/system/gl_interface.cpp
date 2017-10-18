@@ -42,6 +42,8 @@ void gl_PatchMenu();
 static TArray<FString>  m_Extensions;
 RenderContext gl;
 
+EXTERN_CVAR(Int, vid_renderer);
+
 //==========================================================================
 //
 // 
@@ -150,7 +152,8 @@ void gl_LoadExtensions()
 	// Don't even start if it's lower than 2.0 or no framebuffers are available (The framebuffer extension is needed for glGenerateMipmapsEXT!)
 	if ((gl_version < 2.0f || !CheckExtension("GL_EXT_framebuffer_object")) && gl_version < 3.0f)
 	{
-		I_FatalError("Unsupported OpenGL version.\nAt least OpenGL 2.0 with framebuffer support is required to run " GAMENAME ".\n");
+		vid_renderer = 0;
+		I_FatalError("Unsupported OpenGL version.\nAt least OpenGL 2.0 with framebuffer support is required to run " GAMENAME ".\nFalling back to software renderer.\n");
 	}
 
 	// add 0.01 to account for roundoff errors making the number a tad smaller than the actual version

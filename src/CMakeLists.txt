@@ -1615,7 +1615,6 @@ if( MSVC )
 		COMMENT "Adding manifest..."
 	)
 
-	create_default_target_launcher( zdoom WORKING_DIRECTORY ${ZDOOM_OUTPUT_DIR} )
 endif()
 
 if( NOT WIN32 )

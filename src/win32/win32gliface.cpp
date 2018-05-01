@@ -47,6 +47,8 @@ CUSTOM_CVAR(Int, gl_vid_multisample, 0, CVAR_ARCHIVE | CVAR_GLOBALCONFIG | CVAR_
 	Printf("This won't take effect until " GAMENAME " is restarted.\n");
 }
 
+CVAR(Bool, vid_activeinbackground, false, CVAR_ARCHIVE | CVAR_GLOBALCONFIG)
+
 CVAR(Bool, gl_debug, false, 0)
 
 EXTERN_CVAR(Bool, vr_enable_quadbuffered)
@@ -988,7 +990,7 @@ void Win32GLFrameBuffer::InitializeState()
 
 bool Win32GLFrameBuffer::CanUpdate()
 {
-	if (!AppActive && IsFullscreen()) return false;
+	if (!AppActive && (IsFullscreen() || !vid_activeinbackground)) return false;
 	return true;
 }
 

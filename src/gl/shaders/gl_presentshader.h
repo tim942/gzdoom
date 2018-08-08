@@ -15,6 +15,8 @@ public:
 	FBufferedUniform1f Saturation;
 	FBufferedUniform1i GrayFormula;
 	FBufferedUniform2f Scale;
+	FBufferedUniform1f ColorScale;
+	FBufferedUniform1f Padding1, Padding2, Padding3;
 
 protected:
 	virtual void Init(const char * vtx_shader_name, const char * program_name);

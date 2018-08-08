@@ -50,6 +50,7 @@ EXTERN_CVAR(Int, gl_satformula)
 EXTERN_CVAR(Bool, fullscreen)
 EXTERN_CVAR(Int, win_x) // screen pixel position of left of display window
 EXTERN_CVAR(Int, win_y) // screen pixel position of top of display window
+EXTERN_CVAR(Bool, gl_dither)
 
 namespace s3d {
 
@@ -112,6 +113,7 @@ static void prepareInterleavedPresent(FPresentShaderBase& shader)
 		shader.Uniforms->Saturation = clamp<float>(vid_saturation, -15.0f, 15.0f);
 		shader.Uniforms->GrayFormula = static_cast<int>(gl_satformula);
 	}
+	shader.Uniforms->ColorScale = gl_dither ? 255.0f : 0.0f;
 	shader.Uniforms->Scale = {
 		screen->mScreenViewport.width / (float)GLRenderer->mBuffers->GetWidth(),
 		screen->mScreenViewport.height / (float)GLRenderer->mBuffers->GetHeight()

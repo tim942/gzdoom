@@ -111,6 +111,7 @@ struct cvertex_t
 
 typedef TMap<cvertex_t, int> FSectionVertexMap;
 
+#pragma float_control(precise, on, push)  
 static int MergeMapSections(int num)
 {
 	FSectionVertexMap vmap;
@@ -178,6 +179,7 @@ static int MergeMapSections(int num)
 	}
 	return mergecount-1;
 }
+#pragma float_control(pop)
 
 //==========================================================================
 //

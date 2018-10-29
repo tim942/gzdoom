@@ -892,7 +892,7 @@ void DoMain (HINSTANCE hInstance)
 
 		// Figure out what directory the program resides in.
 		char progbuff[1024];
-		if (GetModuleFileName(nullptr, progbuff, sizeof progbuff) == 0)
+		if (GetModuleFileName(NULL, progbuff, sizeof progbuff) == 0)
 		{
 			I_FatalError("Could not determine program location.");
 		}

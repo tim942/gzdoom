@@ -235,7 +235,7 @@ FMultiPatchTexture::FMultiPatchTexture (const void *texdef, FPatchLookup *patchl
 	int i;
 
 	mtexture.d = (const maptexture_t *)texdef;
-	bMultiPatch = true;
+	bMultiPatch = 1;
 
 	if (strife)
 	{
@@ -793,7 +793,7 @@ FTexture *FMultiPatchTexture::GetRedirect(bool wantwarped)
 
 FTexture *FMultiPatchTexture::GetRawTexture()
 {
-	return NumParts == 1 ? Parts->Texture : this;
+	return NumParts == 1 && UseType == FTexture::TEX_Wall && bMultiPatch == 1 && Scale == Parts->Texture->Scale ? Parts->Texture : this;
 }
 
 //==========================================================================
@@ -1169,7 +1169,7 @@ FMultiPatchTexture::FMultiPatchTexture (FScanner &sc, int usetype)
 	TArray<TexInit> inits;
 	bool bSilent = false;
 
-	bMultiPatch = true;
+	bMultiPatch = 2;
 	sc.SetCMode(true);
 	sc.MustGetString();
 	const char* textureName = NULL;

@@ -132,7 +132,7 @@ public:
 	void PrecacheList(SpriteHits &translations);
 	bool isMasked() const
 	{
-		return !!mBaseLayer->tex->bMasked;
+		return mBaseLayer->tex->bMasked;
 	}
 
 	int GetLayers() const

@@ -131,7 +131,7 @@ public:
 	void Precache();
 	bool isMasked() const
 	{
-		return !!mBaseLayer->tex->bMasked;
+		return mBaseLayer->tex->bMasked;
 	}
 
 	void Bind(int cm, int clamp = 0, int translation = 0, int overrideshader = 0);

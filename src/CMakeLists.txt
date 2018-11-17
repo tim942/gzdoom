@@ -1028,47 +1028,6 @@ set( FASTMATH_PCH_SOURCES
 	r_segs.cpp
 	r_sky.cpp
 	r_things.cpp
-	s_advsound.cpp
-	s_environment.cpp
-	s_playlist.cpp
-	s_sndseq.cpp
-	s_sound.cpp
-	GuillotineBinPack.cpp
-	SkylineBinPack.cpp
-	intermission/intermission.cpp
-	intermission/intermission_parse.cpp
-	menu/colorpickermenu.cpp
-	menu/joystickmenu.cpp
-	menu/listmenu.cpp
-	menu/loadsavemenu.cpp
-	menu/menu.cpp
-	menu/menudef.cpp
-	menu/menuinput.cpp
-	menu/messagebox.cpp
-	menu/optionmenu.cpp
-	menu/playerdisplay.cpp
-	menu/playermenu.cpp
-	menu/readthis.cpp
-	menu/videomenu.cpp
-	oplsynth/fmopl.cpp
-	oplsynth/mlopl.cpp
-	oplsynth/mlopl_io.cpp
-	oplsynth/dosbox/opl.cpp
-	oplsynth/OPL3.cpp
-	oplsynth/nukedopl3.cpp
-	timidity/common.cpp
-	timidity/instrum.cpp
-	timidity/instrum_dls.cpp
-	timidity/instrum_font.cpp
-	timidity/instrum_sf2.cpp
-	timidity/mix.cpp
-	timidity/playmidi.cpp
-	timidity/resample.cpp
-	timidity/timidity.cpp
-	wildmidi/file_io.cpp
-	wildmidi/gus_pat.cpp
-	wildmidi/reverb.cpp
-	wildmidi/wm_error.cpp
 	r_data/colormaps.cpp
 	r_data/r_translate.cpp
 )
@@ -1239,6 +1198,13 @@ set (PCH_SOURCES
 	po_man.cpp
 	portal.cpp
 	r_utility.cpp
+	s_advsound.cpp
+	s_environment.cpp
+	s_playlist.cpp
+	s_sndseq.cpp
+	s_sound.cpp
+	GuillotineBinPack.cpp
+	SkylineBinPack.cpp
 	serializer.cpp
 	sc_man.cpp
 	st_stuff.cpp
@@ -1301,6 +1267,27 @@ set (PCH_SOURCES
 	g_shared/sbar_mugshot.cpp
 	g_shared/shared_hud.cpp
 	g_shared/shared_sbar.cpp
+	intermission/intermission.cpp
+	intermission/intermission_parse.cpp
+	menu/colorpickermenu.cpp
+	menu/joystickmenu.cpp
+	menu/listmenu.cpp
+	menu/loadsavemenu.cpp
+	menu/menu.cpp
+	menu/menudef.cpp
+	menu/menuinput.cpp
+	menu/messagebox.cpp
+	menu/optionmenu.cpp
+	menu/playerdisplay.cpp
+	menu/playermenu.cpp
+	menu/readthis.cpp
+	menu/videomenu.cpp
+	oplsynth/fmopl.cpp
+	oplsynth/mlopl.cpp
+	oplsynth/mlopl_io.cpp
+	oplsynth/dosbox/opl.cpp
+	oplsynth/OPL3.cpp
+	oplsynth/nukedopl3.cpp
 	resourcefiles/ancientzip.cpp
 	resourcefiles/file_7z.cpp
 	resourcefiles/file_grp.cpp
@@ -1354,6 +1341,19 @@ set (PCH_SOURCES
 	r_data/renderstyle.cpp
 	r_data/r_interpolate.cpp
 	sfmt/SFMT.cpp
+	timidity/common.cpp
+	timidity/instrum.cpp
+	timidity/instrum_dls.cpp
+	timidity/instrum_font.cpp
+	timidity/instrum_sf2.cpp
+	timidity/mix.cpp
+	timidity/playmidi.cpp
+	timidity/resample.cpp
+	timidity/timidity.cpp
+	wildmidi/file_io.cpp
+	wildmidi/gus_pat.cpp
+	wildmidi/reverb.cpp
+	wildmidi/wm_error.cpp
 	zscript/ast.cpp
 	zscript/vmbuilder.cpp
 	zscript/vmdisasm.cpp

@@ -65,7 +65,7 @@ public:
 		else
 			return NULL;
 	}
-	char const *what() const override
+	char const *what() const noexcept override
 	{
 		return m_Message;
 	}

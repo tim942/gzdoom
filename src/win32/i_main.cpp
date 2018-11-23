@@ -1053,20 +1053,21 @@ void DoMain (HINSTANCE hInstance)
 		}
 		exit(0);
 	}
-	catch (class CDoomError &error)
+	catch (std::exception &error)
 	{
 		I_ShutdownGraphics ();
 		RestoreConView ();
 		I_FlushBufferedConsoleStuff();
-		if (error.GetMessage ())
+		auto msg = error.what();
+		if (strcmp(msg, "NoRunExit"))
 		{
 			if (!batchrun)
 			{
-				ShowErrorPane(error.GetMessage());
+				ShowErrorPane(msg);
 			}
 			else
 			{
-				Printf("%s\n", error.GetMessage());
+				Printf("%s\n", msg);
 			}
 		}
 		exit (-1);

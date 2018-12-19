@@ -160,6 +160,7 @@ void FDrawInfo::DrawSprite(GLSprite *sprite, int pass)
 				: sprite->ThingColor.Modulate(cursec->SpecialColors[sector_t::sprites]);
 
 			gl_RenderState.SetObjectColor(finalcol);
+			gl_RenderState.SetAddColor(cursec->SpecialColors[sector_t::add]);
 		}
 		mDrawer->SetColor(sprite->lightlevel, rel, sprite->Colormap, sprite->trans);
 	}
@@ -305,6 +306,7 @@ void FDrawInfo::DrawSprite(GLSprite *sprite, int pass)
 	}
 
 	gl_RenderState.SetObjectColor(0xffffffff);
+	gl_RenderState.SetAddColor(0);
 	gl_RenderState.EnableTexture(true);
 	gl_RenderState.SetDynLight(0,0,0);
 }

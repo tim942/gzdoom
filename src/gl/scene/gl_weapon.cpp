@@ -60,6 +60,7 @@ void FDrawInfo::DrawPSprite (HUDSprite *huds)
 	}
 	gl_SetRenderStyle(huds->RenderStyle, false, false);
 	gl_RenderState.SetObjectColor(huds->ObjectColor);
+	// gl_RenderState.SetAddColor(0);
 	gl_RenderState.SetDynLight(huds->dynrgb[0], huds->dynrgb[1], huds->dynrgb[2]);
 	gl_RenderState.EnableBrightmap(!(huds->RenderStyle.Flags & STYLEF_ColorIsFixed));
 
@@ -80,6 +81,7 @@ void FDrawInfo::DrawPSprite (HUDSprite *huds)
 
 	gl_RenderState.AlphaFunc(GL_GEQUAL, gl_mask_sprite_threshold);
 	gl_RenderState.SetObjectColor(0xffffffff);
+	gl_RenderState.SetAddColor(0);
 	gl_RenderState.SetDynLight(0, 0, 0);
 	gl_RenderState.EnableBrightmap(false);
 }

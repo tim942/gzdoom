@@ -1447,6 +1447,7 @@ public:
 		sec->damageinterval = 32;
 		sec->terrainnum[sector_t::ceiling] = sec->terrainnum[sector_t::floor] = -1;
 		memset(sec->SpecialColors, -1, sizeof(sec->SpecialColors));
+		sec->SpecialColors[sector_t::add] = 0;
 		if (floordrop) sec->Flags = SECF_FLOORDROP;
 		// killough 3/7/98: end changes
 

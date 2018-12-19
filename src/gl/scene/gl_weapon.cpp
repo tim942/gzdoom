@@ -60,7 +60,14 @@ void FDrawInfo::DrawPSprite (HUDSprite *huds)
 	}
 	gl_SetRenderStyle(huds->RenderStyle, false, false);
 	gl_RenderState.SetObjectColor(huds->ObjectColor);
-	// gl_RenderState.SetAddColor(0);
+	if (huds->owner->Sector)
+	{
+		gl_RenderState.SetAddColor(huds->owner->Sector->SpecialColors[sector_t::add] | 0xff000000);
+	}
+	else
+	{
+		gl_RenderState.SetAddColor(0);
+	}
 	gl_RenderState.SetDynLight(huds->dynrgb[0], huds->dynrgb[1], huds->dynrgb[2]);
 	gl_RenderState.EnableBrightmap(!(huds->RenderStyle.Flags & STYLEF_ColorIsFixed));
 

@@ -103,13 +103,14 @@ class FRenderState
 
 	FVertexBuffer *mVertexBuffer, *mCurrentVertexBuffer;
 	FStateVec4 mNormal;
-	FStateVec4 mColor, mColorAdd;
+	FStateVec4 mColor;
 	FStateVec4 mCameraPos;
 	FStateVec4 mGlowTop, mGlowBottom;
 	FStateVec4 mGlowTopPlane, mGlowBottomPlane;
 	FStateVec4 mGradientTopPlane, mGradientBottomPlane;
 	FStateVec4 mSplitTopPlane, mSplitBottomPlane;
 	FStateVec4 mClipLine;
+	PalEntry mAddColor;
 	PalEntry mFogColor;
 	PalEntry mObjectColor;
 	PalEntry mObjectColor2;
@@ -400,12 +401,16 @@ public:
 		mObjectColor2 = pe;
 	}
 
+	void SetAddColor(PalEntry pe)
+	{
+		mAddColor = pe;
+	}
+
 	void SetSpecular(float glossiness, float specularLevel)
 	{
 		mGlossiness = glossiness;
 		mSpecularLevel = specularLevel;
 	}
-
 	void SetFog(PalEntry c, float d)
 	{
 		const float LOG2E = 1.442692f;	// = 1/log(2)

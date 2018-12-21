@@ -108,10 +108,11 @@ vec4 getTexel(vec2 st)
 		case 7: //TM_FOGLAYER 
 			return texel;
 	}
-	if (uObjectColor2.a == 0.0) texel *= uObjectColor;
-	else texel *= mix(uObjectColor, uObjectColor2, gradientdist.z);
 
 	texel.rgb += uAddColor.rgb;
+
+	if (uObjectColor2.a == 0.0) texel *= uObjectColor;
+	else texel *= mix(uObjectColor, uObjectColor2, gradientdist.z);
 
 	return desaturate(texel);
 }

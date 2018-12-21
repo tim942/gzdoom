@@ -62,7 +62,7 @@ void FDrawInfo::DrawPSprite (HUDSprite *huds)
 	gl_RenderState.SetObjectColor(huds->ObjectColor);
 	if (huds->owner->Sector)
 	{
-		gl_RenderState.SetAddColor(huds->owner->Sector->SpecialColors[sector_t::add] | 0xff000000);
+		gl_RenderState.SetAddColor(huds->owner->Sector->AdditiveColors[sector_t::sprites] | 0xff000000);
 	}
 	else
 	{

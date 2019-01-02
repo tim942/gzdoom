@@ -179,7 +179,7 @@ DEFINE_ACTION_FUNCTION_NATIVE(ADynamicLight, ActivateLight, ActivateLight)
 
 void DeactivateLight(AActor *self)
 {
-	for (auto l : self->AttachedLights) l->Activate();
+	for (auto l : self->AttachedLights) l->Deactivate();
 }
 
 DEFINE_ACTION_FUNCTION_NATIVE(ADynamicLight, DeactivateLight, DeactivateLight)
@@ -227,7 +227,6 @@ void FDynamicLight::ReleaseLight()
 	if (next != nullptr) next->prev = prev;
 	prev = nullptr;
 	FreeList.Push(this);
-	Printf("Releasing %p\n", this);
 }
 
 

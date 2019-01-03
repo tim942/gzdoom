@@ -288,7 +288,7 @@ CCMD (slot)
 		if (slot < NUM_WEAPON_SLOTS && mo)
 		{
 			// Needs to be redone
-			IFVIRTUALPTR(mo, APlayerPawn, PickWeapon)
+			IFVIRTUALPTRNAME(mo, NAME_PlayerPawn, PickWeapon)
 			{
 				VMValue param[] = { mo, slot, !(dmflags2 & DF2_DONTCHECKAMMO) };
 				VMReturn ret((void**)&SendItemUse);
@@ -329,7 +329,7 @@ CCMD (weapnext)
 	if (mo)
 	{
 		// Needs to be redone
-		IFVIRTUALPTR(mo, APlayerPawn, PickNextWeapon)
+		IFVIRTUALPTRNAME(mo, NAME_PlayerPawn, PickNextWeapon)
 		{
 			VMValue param[] = { mo };
 			VMReturn ret((void**)&SendItemUse);
@@ -355,7 +355,7 @@ CCMD (weapprev)
 	if (mo)
 	{
 		// Needs to be redone
-		IFVIRTUALPTR(mo, APlayerPawn, PickPrevWeapon)
+		IFVIRTUALPTRNAME(mo, NAME_PlayerPawn, PickPrevWeapon)
 		{
 			VMValue param[] = { mo };
 			VMReturn ret((void**)&SendItemUse);
@@ -473,7 +473,7 @@ CCMD (drop)
 CCMD (useflechette)
 { 
 	if (who == nullptr) return;
-	IFVIRTUALPTR(who, APlayerPawn, GetFlechetteItem)
+	IFVIRTUALPTRNAME(who, NAME_PlayerPawn, GetFlechetteItem)
 	{
 		VMValue params[] = { who };
 		AActor *cls;
@@ -1246,7 +1246,7 @@ void G_PlayerReborn (int player)
 	int			chasecam;
 	uint8_t		currclass;
 	userinfo_t  userinfo;	// [RH] Save userinfo
-	APlayerPawn *actor;
+	AActor *actor;
 	PClassActor *cls;
 	FString		log;
 	DBot		*Bot;		//Added by MC:
@@ -1294,7 +1294,7 @@ void G_PlayerReborn (int player)
 	{
 		// [GRB] Give inventory specified in DECORATE
 
-		IFVIRTUALPTR(actor, APlayerPawn, GiveDefaultInventory)
+		IFVIRTUALPTRNAME(actor, NAME_PlayerPawn, GiveDefaultInventory)
 		{
 			VMValue params[1] = { actor };
 			VMCall(func, params, 1, nullptr, 0);

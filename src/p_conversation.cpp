@@ -109,10 +109,10 @@ static int ConversationMenuY;
 static int ConversationPauseTic;
 static int StaticLastReply;
 
-static bool LoadScriptFile(int lumpnum, FileReader &lump, int numnodes, bool include, int type);
-static FStrifeDialogueNode *ReadRetailNode (FileReader &lump, uint32_t &prevSpeakerType);
-static FStrifeDialogueNode *ReadTeaserNode (FileReader &lump, uint32_t &prevSpeakerType);
-static void ParseReplies (FStrifeDialogueReply **replyptr, Response *responses);
+static bool LoadScriptFile(const char *name, int lumpnum, FileReader &lump, int numnodes, bool include, int type);
+static FStrifeDialogueNode *ReadRetailNode (const char *name, FileReader &lump, uint32_t &prevSpeakerType);
+static FStrifeDialogueNode *ReadTeaserNode (const char *name, FileReader &lump, uint32_t &prevSpeakerType);
+static void ParseReplies (const char *name, int pos, FStrifeDialogueReply **replyptr, Response *responses);
 static bool DrawConversationMenu ();
 static void PickConversationReply (int replyindex);
 static void TerminalResponse (const char *str);
@@ -183,7 +183,7 @@ void P_LoadStrifeConversations (MapData *map, const char *mapname)
 	P_FreeStrifeConversations ();
 	if (map->Size(ML_CONVERSATION) > 0)
 	{
-		LoadScriptFile (map->lumpnum, map->Reader(ML_CONVERSATION), map->Size(ML_CONVERSATION), false, 0);
+		LoadScriptFile (nullptr, map->lumpnum, map->Reader(ML_CONVERSATION), map->Size(ML_CONVERSATION), false, 0);
 	}
 	else
 	{
@@ -236,11 +236,16 @@ bool LoadScriptFile (const char *name, bool include, int type)
 	}
 	FileReader lump = Wads.ReopenLumpReader (lumpnum);
 
-	bool res = LoadScriptFile(lumpnum, lump, Wads.LumpLength(lumpnum), include, type);
+	auto fn = Wads.GetLumpFile(lumpnum);
+	auto wadname = Wads.GetWadName(fn);
+	if (stricmp(wadname, "STRIFE0.WAD") && stricmp(wadname, "STRIFE1.WAD") && stricmp(wadname, "SVE.WAD")) name = nullptr;	// Only localize IWAD content.
+	if (name && !stricmp(name, "SCRIPT00")) name = nullptr;	// This only contains random string references which already use the string table.
+
+	bool res = LoadScriptFile(name, lumpnum, lump, Wads.LumpLength(lumpnum), include, type);
 	return res;
 }
 
-static bool LoadScriptFile(int lumpnum, FileReader &lump, int numnodes, bool include, int type)
+static bool LoadScriptFile(const char *name, int lumpnum, FileReader &lump, int numnodes, bool include, int type)
 {
 	int i;
 	uint32_t prevSpeakerType;
@@ -297,11 +302,11 @@ static bool LoadScriptFile(int lumpnum, FileReader &lump, int numnodes, bool inc
 		{
 			if (!(gameinfo.flags & GI_SHAREWARE))
 			{
-				node = ReadRetailNode (lump, prevSpeakerType);
+				node = ReadRetailNode (name, lump, prevSpeakerType);
 			}
 			else
 			{
-				node = ReadTeaserNode (lump, prevSpeakerType);
+				node = ReadTeaserNode (name, lump, prevSpeakerType);
 			}
 			node->ThisNodeNum = StrifeDialogues.Push(node);
 		}
@@ -317,7 +322,17 @@ static bool LoadScriptFile(int lumpnum, FileReader &lump, int numnodes, bool inc
 //
 //============================================================================
 
-static FStrifeDialogueNode *ReadRetailNode (FileReader &lump, uint32_t &prevSpeakerType)
+static FString TokenFromString(const char *speech)
+{
+	FString token = speech;
+	token.ToUpper();
+	token.ReplaceChars(".,-+!?'", ' ');
+	token.Substitute(" ", "");
+	token.Truncate(5);
+	return token;
+}
+
+static FStrifeDialogueNode *ReadRetailNode (const char *name, FileReader &lump, uint32_t &prevSpeakerType)
 {
 	FStrifeDialogueNode *node;
 	Speech speech;
@@ -327,6 +342,7 @@ static FStrifeDialogueNode *ReadRetailNode (FileReader &lump, uint32_t &prevSpea
 
 	node = new FStrifeDialogueNode;
 
+	auto pos = lump.Tell();
 	lump.Read (&speech, sizeof(speech));
 
 	// Byte swap all the ints in the original data
@@ -350,7 +366,16 @@ static FStrifeDialogueNode *ReadRetailNode (FileReader &lump, uint32_t &prevSpea
 	}
 
 	// Convert the rest of the data to our own internal format.
-	node->Dialogue = speech.Dialogue;
+
+	if (name)
+	{
+		FStringf label("$TXT_DLG_%s_d%d_%s", name, int(pos), TokenFromString(speech.Dialogue));
+		node->Dialogue = label;
+	}
+	else
+	{
+		node->Dialogue = speech.Dialogue;
+	}
 
 	// The speaker's portrait, if any.
 	speech.Dialogue[0] = 0; 	//speech.Backdrop[8] = 0;
@@ -380,7 +405,7 @@ static FStrifeDialogueNode *ReadRetailNode (FileReader &lump, uint32_t &prevSpea
 	node->ItemCheckNode = speech.Link;
 	node->Children = NULL;
 
-	ParseReplies (&node->Children, &speech.Responses[0]);
+	ParseReplies (name, int(pos), &node->Children, &speech.Responses[0]);
 
 	return node;
 }
@@ -393,7 +418,7 @@ static FStrifeDialogueNode *ReadRetailNode (FileReader &lump, uint32_t &prevSpea
 //
 //============================================================================
 
-static FStrifeDialogueNode *ReadTeaserNode (FileReader &lump, uint32_t &prevSpeakerType)
+static FStrifeDialogueNode *ReadTeaserNode (const char *name, FileReader &lump, uint32_t &prevSpeakerType)
 {
 	FStrifeDialogueNode *node;
 	TeaserSpeech speech;
@@ -403,6 +428,7 @@ static FStrifeDialogueNode *ReadTeaserNode (FileReader &lump, uint32_t &prevSpea
 
 	node = new FStrifeDialogueNode;
 
+	auto pos = lump.Tell() * 1516 / 1488;
 	lump.Read (&speech, sizeof(speech));
 
 	// Byte swap all the ints in the original data
@@ -425,7 +451,15 @@ static FStrifeDialogueNode *ReadTeaserNode (FileReader &lump, uint32_t &prevSpea
 	}
 
 	// Convert the rest of the data to our own internal format.
-	node->Dialogue = speech.Dialogue;
+	if (name)
+	{
+		FStringf label("$TXT_DLG_%s_d%d_%s", name, pos, TokenFromString(speech.Dialogue));
+		node->Dialogue = label;
+	}
+	else
+	{
+		node->Dialogue = speech.Dialogue;
+	}
 
 	// The Teaser version doesn't have portraits.
 	node->Backdrop = "";
@@ -458,7 +492,7 @@ static FStrifeDialogueNode *ReadTeaserNode (FileReader &lump, uint32_t &prevSpea
 	node->ItemCheckNode = 0;
 	node->Children = NULL;
 
-	ParseReplies (&node->Children, &speech.Responses[0]);
+	ParseReplies (name, int(pos), &node->Children, &speech.Responses[0]);
 
 	return node;
 }
@@ -473,7 +507,7 @@ static FStrifeDialogueNode *ReadTeaserNode (FileReader &lump, uint32_t &prevSpea
 //
 //============================================================================
 
-static void ParseReplies (FStrifeDialogueReply **replyptr, Response *responses)
+static void ParseReplies (const char *name, int pos, FStrifeDialogueReply **replyptr, Response *responses)
 {
 	FStrifeDialogueReply *reply;
 	int j, k;
@@ -527,24 +561,52 @@ static void ParseReplies (FStrifeDialogueReply **replyptr, Response *responses)
 		reply->ItemCheckRequire.Clear();
 		reply->ItemCheckExclude.Clear();
 
+		if (name)
+		{
+			FStringf label("$TXT_RPLY%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->Reply));
+			reply->Reply = label;
+		}
+		else
+		{
+			reply->Reply = rsp->Reply;
+		}
+
+
 		// If the first item check has a positive amount required, then
 		// add that to the reply string. Otherwise, use the reply as-is.
-		reply->Reply = rsp->Reply;
 		reply->NeedsGold = (rsp->Count[0] > 0);
 
 		// QuickYes messages are shown when you meet the item checks.
 		// QuickNo messages are shown when you don't.
-		if (rsp->Yes[0] == '_' && rsp->Yes[1] == 0)
+		// Note that empty nodes contain a '_' in retail Strife, a '.' in the teasers and an empty string in SVE.
+		if (((rsp->Yes[0] == '_' || rsp->Yes[0] == '.') && rsp->Yes[1] == 0) || rsp->Yes[0] == 0)
 		{
 			reply->QuickYes = "";
 		}
 		else
 		{
-			reply->QuickYes = rsp->Yes;
+			if (name)
+			{
+				FStringf label("$TXT_RYES%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->Yes));
+				reply->QuickYes = label;
+			}
+			else
+			{
+				reply->QuickYes = rsp->Yes;
+			}
 		}
 		if (reply->ItemCheck[0].Item != 0)
 		{
-			reply->QuickNo = rsp->No;
+			if (name && strncmp(rsp->No, "NO. ", 4))	// All 'no' nodes starting with 'NO.' won't ever be shown and they all contain broken text.
+			{
+				FStringf label("$TXT_RNO%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->No));
+				reply->QuickNo = label;
+			}
+			else
+			{
+				reply->QuickNo = rsp->No;
+			}
+
 		}
 		else
 		{

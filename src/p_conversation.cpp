@@ -369,7 +369,7 @@ static FStrifeDialogueNode *ReadRetailNode (const char *name, FileReader &lump, 
 
 	if (name)
 	{
-		FStringf label("$TXT_DLG_%s_d%d_%s", name, int(pos), TokenFromString(speech.Dialogue));
+		FStringf label("$TXT_DLG_%s_d%d_%s", name, int(pos), TokenFromString(speech.Dialogue).GetChars());
 		node->Dialogue = label;
 	}
 	else
@@ -453,7 +453,7 @@ static FStrifeDialogueNode *ReadTeaserNode (const char *name, FileReader &lump, 
 	// Convert the rest of the data to our own internal format.
 	if (name)
 	{
-		FStringf label("$TXT_DLG_%s_d%d_%s", name, pos, TokenFromString(speech.Dialogue));
+		FStringf label("$TXT_DLG_%s_d%d_%s", name, pos, TokenFromString(speech.Dialogue).GetChars());
 		node->Dialogue = label;
 	}
 	else
@@ -563,7 +563,7 @@ static void ParseReplies (const char *name, int pos, FStrifeDialogueReply **repl
 
 		if (name)
 		{
-			FStringf label("$TXT_RPLY%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->Reply));
+			FStringf label("$TXT_RPLY%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->Reply).GetChars());
 			reply->Reply = label;
 		}
 		else
@@ -587,7 +587,7 @@ static void ParseReplies (const char *name, int pos, FStrifeDialogueReply **repl
 		{
 			if (name)
 			{
-				FStringf label("$TXT_RYES%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->Yes));
+				FStringf label("$TXT_RYES%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->Yes).GetChars());
 				reply->QuickYes = label;
 			}
 			else
@@ -599,7 +599,7 @@ static void ParseReplies (const char *name, int pos, FStrifeDialogueReply **repl
 		{
 			if (name && strncmp(rsp->No, "NO. ", 4))	// All 'no' nodes starting with 'NO.' won't ever be shown and they all contain broken text.
 			{
-				FStringf label("$TXT_RNO%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->No));
+				FStringf label("$TXT_RNO%d_%s_d%d_%s", j, name, pos, TokenFromString(rsp->No).GetChars());
 				reply->QuickNo = label;
 			}
 			else

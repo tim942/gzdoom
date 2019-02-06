@@ -2413,7 +2413,7 @@ void D_DoomMain (void)
 		}
 
 		// [RH] Initialize localizable strings.
-		GStrings.LoadStrings (false);
+		GStrings.LoadStrings ();
 
 		V_InitFontColors ();
 

@@ -219,7 +219,6 @@ static bool TwiddleSeqNum (int &sequence, seqtype_t type);
 // PUBLIC DATA DEFINITIONS -------------------------------------------------
 
 FSoundSequencePtrArray Sequences;
-int ActiveSequences;
 DSeqNode *DSeqNode::SequenceListHead;
 
 // PRIVATE DATA DEFINITIONS ------------------------------------------------
@@ -412,7 +411,6 @@ void DSeqNode::OnDestroy()
 		m_Next->m_Prev = m_Prev;
 		GC::WriteBarrier(m_Next, m_Prev);
 	}
-	ActiveSequences--;
 	Super::OnDestroy();
 }
 
@@ -832,8 +830,6 @@ void DSeqNode::ActivateSequence (int sequence)
 	m_CurrentSoundID = 0;
 	m_Volume = 1;			// Start at max volume...
 	m_Atten = ATTN_IDLE;	// ...and idle attenuation
-
-	ActiveSequences++;
 }
 
 DSeqActorNode::DSeqActorNode (AActor *actor, int sequence, int modenum)
@@ -1328,7 +1324,6 @@ void DSeqNode::Tick ()
 						int seqnum = FindSequence (ENamedName(m_SequencePtr[i*2+1]));
 						if (seqnum >= 0)
 						{ // Found a match, and it's a good one too.
-							ActiveSequences--;
 							ActivateSequence (seqnum);
 							break;
 						}
@@ -1363,7 +1358,7 @@ void SN_UpdateActiveSequences (void)
 {
 	DSeqNode *node;
 
-	if (!ActiveSequences || paused)
+	if (paused)
 	{ // No sequences currently playing/game is paused
 		return;
 	}

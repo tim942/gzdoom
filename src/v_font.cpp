@@ -1039,7 +1039,7 @@ FFont *V_GetFont(const char *name, const char *fontlumpname)
 		}
 		if (folderdata.Size() > 0)
 		{
-			return new FFont(name, nullptr, path, HU_FONTSTART, HU_FONTSIZE, 1, -1);
+			return new FFont(name, nullptr, name, HU_FONTSTART, HU_FONTSIZE, 1, -1);
 		}
 	}
 	return font;
@@ -1059,7 +1059,8 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 	FTextureID lump;
 	char buffer[12];
 	int maxyoffs;
-	bool doomtemplate = gameinfo.gametype & GAME_DoomChex ? strncmp (nametemplate, "STCFN", 5) == 0 : false;
+	bool doomtemplate = (nametemplate && (gameinfo.gametype & GAME_DoomChex)) ? strncmp (nametemplate, "STCFN", 5) == 0 : false;
+	DVector2 Scale = { 1, 1 };
 
 	noTranslate = notranslate;
 	Lump = fdlump;
@@ -1071,12 +1072,74 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 	FirstFont = this;
 	Cursor = '_';
 	ActiveColors = 0;
+	SpaceWidth = 0;
+	FontHeight = 0;
 
 	maxyoffs = 0;
 
 	TMap<int, FTexture*> charMap;
 	int minchar = INT_MAX;
 	int maxchar = INT_MIN;
+	
+	// Read the font's configuration.
+	// This will not be done for the default fonts, because they are not atomic and the default content does not need it.
+	
+	TArray<FolderEntry> folderdata;
+	if (filetemplate != nullptr)
+	{
+		FStringf path("fonts/%s/", filetemplate);
+		// If a name template is given, collect data from all resource files.
+		// For anything else, each folder is being treated as an atomic, self-contained unit and mixing from different glyph sets is blocked.
+		Wads.GetLumpsInFolder(path, folderdata, nametemplate == nullptr);
+		
+		if (nametemplate == nullptr)
+		{
+			// Only take font.inf from the actual folder we are processing but not from an older folder that may have been superseded.
+			FStringf infpath("fonts/%s/font.inf", filetemplate);
+			
+			unsigned index = folderdata.FindEx([=](const FolderEntry &entry)
+			{
+				return infpath.CompareNoCase(entry.name) == 0;
+			});
+			
+			if (index < folderdata.Size())
+			{
+				FScanner sc;
+				sc.OpenLumpNum(folderdata[index].lumpnum);
+				while (sc.GetToken())
+				{
+					sc.TokenMustBe(TK_Identifier);
+					if (sc.Compare("Kerning"))
+					{
+						sc.MustGetValue(false);
+						GlobalKerning = sc.Number;
+					}
+					else if (sc.Compare("Scale"))
+					{
+						sc.MustGetValue(true);
+						Scale.Y = Scale.X = sc.Float;
+						if (sc.CheckToken(','))
+						{
+							sc.MustGetValue(true);
+							Scale.Y = sc.Float;
+						}
+					}
+					else if (sc.Compare("SpaceWidth"))
+					{
+						sc.MustGetValue(false);
+						SpaceWidth = sc.Number;
+					}
+					else if (sc.Compare("FontHeight"))
+					{
+						sc.MustGetValue(false);
+						FontHeight = sc.Number;
+					}
+				}
+			}
+		}
+	}
+	
+	
 	if (nametemplate != nullptr)
 	{
 		for (i = 0; i < lcount; i++)
@@ -1106,29 +1169,24 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 			}
 		}
 	}
-	if (filetemplate != nullptr)
+	if (folderdata.Size() > 0)
 	{
-		TArray<FolderEntry> folderdata;
-		FStringf path("fonts/%s/", filetemplate);
-		// If a name template is given, collect data from all resource files.
-		// For anything else, each folder is being treated as an atomic, self-contained unit and mixing from different glyph sets is blocked.
-		if (Wads.GetLumpsInFolder(path, folderdata, nametemplate == nullptr))
+		// all valid lumps must be named with a hex number that represents its Unicode character index.
+		for (auto &entry : folderdata)
 		{
-			// all valid lumps must be named with a hex number that represents its Unicode character index.
-			for (auto &entry : folderdata)
+			char *endp;
+			auto base = ExtractFileBase(entry.name);
+			auto position = strtoll(base.GetChars(), &endp, 16);
+			if ((*endp == 0 || (*endp == '.' && position >= '!' && position < 0xffff)))
 			{
-				char *endp;
-				auto base = ExtractFileBase(entry.name);
-				auto position = strtoll(base.GetChars(), &endp, 16);
-				if ((*endp == 0 || (*endp == '.' && position >= '!' && position < 0xffff)))
+				auto lump = TexMan.CheckForTexture(entry.name, ETextureType::MiscPatch);
+				if (lump.isValid())
 				{
-					auto lump = TexMan.CheckForTexture(entry.name, ETextureType::MiscPatch);
-					if (lump.isValid())
-					{
-						if ((int)position < minchar) minchar = (int)position;
-						if ((int)position > maxchar) maxchar = (int)position;
-						charMap.Insert((int)position, TexMan[lump]);
-					}
+					if ((int)position < minchar) minchar = (int)position;
+					if ((int)position > maxchar) maxchar = (int)position;
+					auto tex = TexMan[lump];
+					tex->SetScale(Scale);
+					charMap.Insert((int)position, tex);
 				}
 			}
 		}
@@ -1138,6 +1196,7 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 	LastChar = maxchar;
 	auto count = maxchar - minchar + 1;
 	Chars = new CharData[count];
+	int fontheight = 0;
 
 	for (i = 0; i < count; i++)
 	{
@@ -1155,9 +1214,9 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 					maxyoffs = yoffs;
 				}
 				height += abs(yoffs);
-				if (height > FontHeight)
+				if (height > fontheight)
 				{
-					FontHeight = height;
+					fontheight = height;
 				}
 			}
 
@@ -1171,19 +1230,23 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 			Chars[i].XMove = INT_MIN;
 		}
 	}
-
-	if (spacewidth != -1)
+	
+	if (SpaceWidth == 0) // An explicit override from the .inf file must always take precedence
 	{
-		SpaceWidth = spacewidth;
+		if (spacewidth != -1)
+		{
+			SpaceWidth = spacewidth;
+		}
+		else if ('N'-FirstChar >= 0 && 'N'-FirstChar < count && Chars['N' - FirstChar].Pic != nullptr)
+		{
+			SpaceWidth = (Chars['N' - FirstChar].XMove + 1) / 2;
+		}
+		else
+		{
+			SpaceWidth = 4;
+		}
 	}
-	else if ('N'-FirstChar >= 0 && 'N'-FirstChar < count && Chars['N' - FirstChar].Pic != nullptr)
-	{
-		SpaceWidth = (Chars['N' - FirstChar].XMove + 1) / 2;
-	}
-	else
-	{
-		SpaceWidth = 4;
-	}
+	if (FontHeight == 0) FontHeight = fontheight;
 
 	FixXMoves();
 
@@ -2819,7 +2882,7 @@ void FFont::FixXMoves()
 			// Try an uppercase character.
 			if (myislower(i + FirstChar))
 			{
-				int upper = i - 32;
+				int upper = upperforlower[FirstChar + i];
 				if (upper >= 0)
 				{
 					Chars[i].XMove = Chars[upper].XMove;

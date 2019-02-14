@@ -1568,13 +1568,14 @@ void FExecList::AddPullins(TArray<FString> &wads) const
 
 FExecList *C_ParseExecFile(const char *file, FExecList *exec)
 {
-	FILE *f;
 	char cmd[4096];
 	int retval = 0;
 
-	if ( (f = fopen (file, "r")) )
+	FileReader fr;
+
+	if ( (fr.OpenFile(file)) )
 	{
-		while (fgets(cmd, countof(cmd)-1, f))
+		while (fr.Gets(cmd, countof(cmd)-1))
 		{
 			// Comments begin with //
 			char *stop = cmd + strlen(cmd) - 1;
@@ -1610,11 +1611,6 @@ FExecList *C_ParseExecFile(const char *file, FExecList *exec)
 			}
 			exec->AddCommand(cmd, file);
 		}
-		if (!feof(f))
-		{
-			Printf("Error parsing \"%s\"\n", file);
-		}
-		fclose(f);
 	}
 	else
 	{

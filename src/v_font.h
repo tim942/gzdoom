@@ -121,6 +121,7 @@ protected:
 	int GlobalKerning;
 	char Cursor;
 	bool noTranslate;
+	bool MixedCase = false;
 	struct CharData
 	{
 		FTexture *Pic;

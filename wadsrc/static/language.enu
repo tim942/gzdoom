@@ -1306,6 +1306,10 @@ TXT_IMITEMS = "ITEMS";
 TXT_IMSECRETS = "SECRETS";
 TXT_IMTIME = "TIME";
 
+// For testing the extended characters' positioning.
+//TXT_IMKILLS			= "AÀÁÂÃÄÅÆÇÈÉÊËÌÍÎ";
+//TXT_IMITEMS			= "OÐÏÑÒÓÔÕÖØÙÚÛÜÝÞß";
+
 RAVENQUITMSG = "ARE YOU SURE YOU WANT TO QUIT?";
 
 // Friendly names

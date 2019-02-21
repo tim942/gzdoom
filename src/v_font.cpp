@@ -2959,6 +2959,7 @@ void V_InitCustomFonts()
 	int first;
 	int count;
 	int spacewidth;
+	int kerning;
 	char cursor = '_';
 
 	while ((llump = Wads.FindLump ("FONTDEFS", &lastlump)) != -1)
@@ -2975,6 +2976,7 @@ void V_InitCustomFonts()
 			first = 33;
 			count = 223;
 			spacewidth = -1;
+			kerning = 0;
 
 			sc.MustGetStringName ("{");
 			while (!sc.CheckString ("}"))
@@ -3034,6 +3036,11 @@ void V_InitCustomFonts()
 					}
 					format = 2;
 				}
+				else if (sc.Compare("KERNING"))
+				{
+					sc.MustGetNumber();
+					kerning = sc.Number;
+				}
 				else
 				{
 					if (format == 1) goto wrong;
@@ -3056,6 +3063,7 @@ void V_InitCustomFonts()
 			{
 				FFont *fnt = new FFont (namebuffer, templatebuf, nullptr, first, count, start, llump, spacewidth, donttranslate);
 				fnt->SetCursor(cursor);
+				fnt->SetKerning(kerning);
 			}
 			else if (format == 2)
 			{
@@ -3079,6 +3087,7 @@ void V_InitCustomFonts()
 				{
 					FFont *fnt = new FSpecialFont (namebuffer, first, count, &lumplist[first], notranslate, llump, donttranslate);
 					fnt->SetCursor(cursor);
+					fnt->SetKerning(kerning);
 				}
 			}
 			else goto wrong;

@@ -45,7 +45,7 @@ struct _ native	// These are the global variables, the struct is only here to av
 	native ui BaseStatusBar StatusBar;
 	native readonly Weapon WP_NOCHANGE;
 	native int LocalViewPitch;
-	native readonly @MusPlayingInfo mus_playing;
+	native readonly @MusPlayingInfo musplaying;
 
 }
 

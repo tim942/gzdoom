@@ -562,7 +562,7 @@ void C_DoCommand (const char *cmd, int keynum)
 	const char *beg;
 
 	// Skip any beginning whitespace
-	while (*cmd && *cmd <= ' ')
+	while (*cmd > 0 && *cmd <= ' ')
 		cmd++;
 
 	// Find end of the command name
@@ -574,7 +574,7 @@ void C_DoCommand (const char *cmd, int keynum)
 	else
 	{
 		beg = cmd;
-		for (end = cmd+1; *end > ' '; ++end)
+		for (end = cmd+1; *end > ' ' || *end < 0; ++end)
 			;
 	}
 
@@ -727,7 +727,7 @@ void AddCommandString (const char *text, int keynum)
 				more = 0;
 			}
 			// Intercept wait commands here. Note: wait must be lowercase
-			while (*cmd && *cmd <= ' ')
+			while (*cmd > 0 && *cmd <= ' ')
 				cmd++;
 			if (*cmd)
 			{

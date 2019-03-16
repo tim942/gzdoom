@@ -81,6 +81,8 @@ CUSTOM_CVAR(Float, dimamount, -1.f, CVAR_ARCHIVE)
 }
 CVAR(Color, dimcolor, 0xffd700, CVAR_ARCHIVE)
 
+// Option Search
+CVAR(Bool, os_isanyof, true, CVAR_ARCHIVE);
 
 
 static DMenu *GetCurrentMenu()

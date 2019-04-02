@@ -3471,6 +3471,11 @@ void P_SetupLevel(const char *lumpname, int position, bool newGame)
 	if (ForceNodeBuild)
 	{
 		BuildGLNodes = RequireGLNodes || multiplayer || demoplayback || demorecording || genglnodes;
+		// In case the compatibility handler made changes to the map's layout
+		for(auto &line : level.lines)
+		{
+			line.AdjustLine();
+		}
 
 		startTime = I_msTime();
 		TArray<FNodeBuilder::FPolyStart> polyspots, anchors;

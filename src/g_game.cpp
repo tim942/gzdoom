@@ -75,6 +75,7 @@
 #include "vm.h"
 #include "dobjgc.h"
 #include "gi.h"
+#include "p_conversation.h"
 
 #include "g_hub.h"
 #include "g_levellocals.h"
@@ -1098,6 +1099,11 @@ void G_Ticker ()
 			AM_ToggleMap ();
 			gameaction = ga_nothing;
 			break;
+		case ga_resumeconversation:
+			P_ResumeConversation ();
+			gameaction = ga_nothing;
+			break;
+		default:
 		case ga_nothing:
 			break;
 		}

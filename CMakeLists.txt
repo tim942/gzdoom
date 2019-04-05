@@ -263,6 +263,9 @@ else()
 		# Generic GCC/Clang requires position independent executable to be enabled explicitly
 		set( ALL_C_FLAGS "${ALL_C_FLAGS} -fPIE" )
 		set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie" )
+	else()
+		set( ALL_C_FLAGS "${ALL_C_FLAGS} -D_UNICODE -DUNICODE" )
+		set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -municode" )
 	endif( APPLE )
 endif()
 

@@ -1137,7 +1137,6 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 	noTranslate = notranslate;
 	Lump = fdlump;
 	PatchRemap = new uint8_t[256];
-	FontHeight = 0;
 	GlobalKerning = false;
 	FontName = name;
 	Next = FirstFont;

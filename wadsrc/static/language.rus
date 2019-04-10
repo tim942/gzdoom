@@ -1736,6 +1736,11 @@ OPTMNU_DEFAULTS				= "Сбросить все настройки";
 OPTMNU_RESETTOSAVED			= "Вернуть предыдущие настройки";
 OPTMNU_CONSOLE				= "Открыть консоль";
 OPTMNU_REVERB				= "Редактор реверберации";
+OS_TITLE					= "Поиск настройки";
+OS_ANY						= "Искать любое из слов";
+OS_ALL						= "Искать все слова";
+OS_NO_RESULTS				= "Результатов не найдено.";
+OS_LABEL					= "Поиск:";
 
 // Controls Menu
 

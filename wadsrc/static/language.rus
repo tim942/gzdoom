@@ -2702,10 +2702,13 @@ DSPLYMNU_SATURATION = "Насыщенность";
 DSPLYMNU_HWGAMMA	= "Аппаратная гамма";
 
 // OpenGL Options
-GLMNU_TITLE		= "НАСТРОЙКИ OPENGL";
-GLMNU_DYNLIGHT	= "Динамическое освещение";
-GLMNU_TEXOPT	= "Настройки текстур";
-GLMNU_PREFS		= "Предпочтения";
+GLMNU_TITLE			= "НАСТРОЙКИ OPENGL";
+GLMNU_DYNLIGHT		= "Динамическое освещение";
+GLMNU_TEXOPT		= "Настройки текстур";
+GLMNU_PREFS			= "Предпочтения";
+HUDMNU_FLASH		= "смешивания экрана";
+GLMNU_POSTPROCESS	= "Постобработка";
+GLMNU_3DMODE		= "Режим 3D";
 
 // Texture Options
 GLTEXMNU_TITLE			= "НАСТРОЙКИ ТЕКСТУР";

@@ -154,7 +154,7 @@ bool IShadowMap::ValidateAABBTree()
 	}
 
 	if (mAABBTree)
-		return mAABBTree->Update();
+		return true;
 
 	mAABBTree.reset(new hwrenderer::LevelAABBTree());
 	return false;

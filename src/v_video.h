@@ -200,6 +200,16 @@ enum
 	DTA_SrcWidth,
 	DTA_SrcHeight,
 	DTA_LegacyRenderStyle,	// takes an old-style STYLE_* constant instead of an FRenderStyle
+	DTA_Spacing,			// Strings only: Additional spacing between characters
+	DTA_Monospace,			// Fonts only: Use a fixed distance between characters.
+};
+
+enum EMonospacing
+{
+	MOff = 0,
+	CellLeft = 1,
+	CellCenter = 2,
+	CellRight = 3
 };
 
 enum
@@ -250,6 +260,8 @@ struct DrawParms
 	int desaturate;
 	int scalex, scaley;
 	int cellx, celly;
+	int monospace;
+	int spacing;
 	int maxstrlen;
 	bool fortext;
 	bool virtBottom;

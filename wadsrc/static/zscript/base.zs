@@ -43,10 +43,10 @@ struct _ native	// These are the global variables, the struct is only here to av
 	native readonly int Net_Arbitrator;
 	native ui BaseStatusBar StatusBar;
 	native readonly Weapon WP_NOCHANGE;
+	deprecated("3.8") native readonly bool globalfreeze;
 	native int LocalViewPitch;
 	native readonly @MusPlayingInfo musplaying;
-	deprecated("3.8") native readonly bool globalfreeze;
-	
+
 }
 
 struct MusPlayingInfo native

@@ -111,6 +111,8 @@ public:
 	inline int StringWidth (const char *str) const { return StringWidth ((const uint8_t *)str); }
 	inline int StringWidth (const FString &str) const { return StringWidth ((const uint8_t *)str.GetChars()); }
 
+	inline bool CanPrint(const uint8_t *str) const { return false; } // hack hack
+
 	int GetCharCode(int code, bool needpic) const;
 	char GetCursor() const { return Cursor; }
 	void SetCursor(char c) { Cursor = c; }
@@ -156,7 +158,7 @@ protected:
 };
 
 
-extern FFont *SmallFont, *SmallFont2, *BigFont, *BigUpper, *ConFont, *IntermissionFont;
+extern FFont *SmallFont, *SmallFont2, *BigFont, *BigUpper, *ConFont, *IntermissionFont, *NewConsoleFont, *NewSmallFont, *CurrentConsoleFont, *OriginalSmallFont, *AlternativeSmallFont, *OriginalBigFont;
 
 void V_InitFonts();
 void V_ClearFonts();

@@ -3593,7 +3593,13 @@ void V_InitFonts()
 	{
 		BigFont = SmallFont;
 	}
-	
+	// hack hack
+	NewConsoleFont = ConFont;
+	NewSmallFont = SmallFont;
+	AlternativeSmallFont = SmallFont;
+	OriginalSmallFont = SmallFont;
+	OriginalBigFont = BigFont;
+
 }
 
 void V_ClearFonts()
@@ -3603,6 +3609,6 @@ void V_ClearFonts()
 		delete FFont::FirstFont;
 	}
 	FFont::FirstFont = NULL;
-	SmallFont = SmallFont2 = BigFont = ConFont = IntermissionFont = NULL;
+	AlternativeSmallFont = OriginalBigFont = OriginalSmallFont = CurrentConsoleFont = NewSmallFont = NewConsoleFont = SmallFont = SmallFont2 = BigFont = ConFont = IntermissionFont = nullptr;
 }
 

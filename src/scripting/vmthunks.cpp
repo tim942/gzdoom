@@ -1879,7 +1879,7 @@ DEFINE_ACTION_FUNCTION_NATIVE(FFont, StringWidth, StringWidth)
 
 static int CanPrint(FFont *font, const FString &str) // hack hack
 {
-	return 0;
+	return 1;
 }
 
 DEFINE_ACTION_FUNCTION_NATIVE(FFont, CanPrint, CanPrint)

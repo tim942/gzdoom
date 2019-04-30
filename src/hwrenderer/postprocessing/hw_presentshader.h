@@ -20,6 +20,7 @@ public:
 		FVector2 Scale;
 		float ColorScale;
 		float Padding1, Padding2, Padding3;
+		int HdrMode;
 
 		static std::vector<UniformFieldDesc> Desc()
 		{
@@ -33,6 +34,7 @@ public:
 				{ "WindowPositionParity", UniformType::Int, offsetof(UniformBlock, WindowPositionParity) },
 				{ "UVScale", UniformType::Vec2, offsetof(UniformBlock, Scale) },
 				{ "ColorScale", UniformType::Float, offsetof(UniformBlock, ColorScale) },
+				{ "HdrMode", UniformType::Int, offsetof(UniformBlock, HdrMode) }
 			};
 		}
 	};

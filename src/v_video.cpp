@@ -71,6 +71,7 @@
 #include "vm.h"
 #include "r_videoscale.h"
 #include "i_time.h"
+#include "atterm.h"
 
 EXTERN_CVAR(Bool, cl_capfps)
 EXTERN_CVAR(Float, vid_brightness)

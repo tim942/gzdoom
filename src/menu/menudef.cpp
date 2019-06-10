@@ -132,7 +132,7 @@ DEFINE_ACTION_FUNCTION(FOptionValues, GetText)
 
 void DeinitMenus()
 {
-	if (CurrentMenu) CurrentMenu->Destroy();
+	M_ClearMenus();
 	{
 		FOptionMap::Iterator it(OptionValues);
 
@@ -146,7 +146,6 @@ void DeinitMenus()
 	}
 	MenuDescriptors.Clear();
 	OptionValues.Clear();
-	CurrentMenu = nullptr;
 	savegameManager.ClearSaveGames();
 }
 

@@ -720,37 +720,10 @@ void G_ExitLevel (int position, bool keepFacing)
 	G_ChangeLevel(G_GetExitMap(), position, keepFacing ? CHANGELEVEL_KEEPFACING : 0);
 }
 
-void LevelLocals_ExitLevel(int position, bool keepFacing)
-{
-	G_ExitLevel(position, keepFacing);
-}
-
-DEFINE_ACTION_FUNCTION_NATIVE(FLevelLocals, ExitLevel, LevelLocals_ExitLevel)
-{
-	PARAM_PROLOGUE;
-	PARAM_INT(position);
-	PARAM_INT(keepFacing);
-	G_ExitLevel(position, keepFacing);
-	return 0;
-}
-
 void G_SecretExitLevel (int position) 
 {
 	level.flags3 |= LEVEL3_EXITSECRETUSED;
 	G_ChangeLevel(G_GetSecretExitMap(), position, 0);
-}
-
-void LevelLocals_SecretExitLevel(int position)
-{
-	G_SecretExitLevel(position);
-}
-
-DEFINE_ACTION_FUNCTION_NATIVE(FLevelLocals, SecretExitLevel, LevelLocals_SecretExitLevel)
-{
-	PARAM_PROLOGUE;
-	PARAM_INT(position);
-	G_SecretExitLevel(position);
-	return 0;
 }
 
 //==========================================================================

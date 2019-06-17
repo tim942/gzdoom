@@ -720,7 +720,7 @@ void G_ExitLevel (int position, bool keepFacing)
 	G_ChangeLevel(G_GetExitMap(), position, keepFacing ? CHANGELEVEL_KEEPFACING : 0);
 }
 
-static void LevelLocals_ExitLevel(int position, bool keepFacing)
+void LevelLocals_ExitLevel(int position, bool keepFacing)
 {
 	G_ExitLevel(position, keepFacing);
 }
@@ -740,7 +740,7 @@ void G_SecretExitLevel (int position)
 	G_ChangeLevel(G_GetSecretExitMap(), position, 0);
 }
 
-static void LevelLocals_SecretExitLevel(int position)
+void LevelLocals_SecretExitLevel(int position)
 {
 	G_SecretExitLevel(position);
 }

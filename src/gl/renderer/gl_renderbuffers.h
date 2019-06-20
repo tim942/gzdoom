@@ -16,6 +16,8 @@ public:
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap);
 	}
 
+	explicit operator bool() const { return handle != 0; }
+
 private:
 	GLuint handle = 0;
 
@@ -29,6 +31,8 @@ public:
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, handle);
 	}
+
+	explicit operator bool() const { return handle != 0; }
 
 private:
 	GLuint handle = 0;
@@ -193,7 +197,7 @@ private:
 	PPFrameBuffer mShadowMapFB;
 	int mCurrentShadowMapSize = 0;
 
-	PPGLTexture mDitherTexture;
+	PPTexture mDitherTexture;
 
 	static bool FailedCreate;
 	static bool BuffersActive;

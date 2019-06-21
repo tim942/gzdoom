@@ -5904,7 +5904,7 @@ int DLevelScript::CallFunction(int argCount, int funcIndex, int32_t *args)
 		case ACSF_GetCVarString:
 			if (argCount == 1)
 			{
-				return DoGetCVar(GetCVar(activator, FBehavior::StaticLookupString(args[0])), true);
+				return DoGetCVar(GetCVar(activator && activator->player ? int(activator->player - players) : -1, FBehavior::StaticLookupString(args[0])), true);
 			}
 			break;
 
@@ -9854,7 +9854,7 @@ scriptwait:
 			break;
 
 		case PCD_GETCVAR:
-			STACK(1) = DoGetCVar(GetCVar(activator, FBehavior::StaticLookupString(STACK(1))), false);
+			STACK(1) = DoGetCVar(GetCVar(activator && activator->player? int(activator->player - players) : -1, FBehavior::StaticLookupString(STACK(1))), false);
 			break;
 
 		case PCD_SETHUDSIZE:

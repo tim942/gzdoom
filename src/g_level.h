@@ -589,7 +589,7 @@ struct FSkillInfo
 	int Infighting;
 	bool PlayerRespawn;
 
-	FSkillInfo() {}
+	FSkillInfo() = default;
 	FSkillInfo(const FSkillInfo &other)
 	{
 		operator=(other);

@@ -201,7 +201,7 @@ void FDrawInfo::RenderTexturedWall(GLWall *wall, int rflags)
 		PalEntry color2 = side->GetSpecialColor(tierndx, side_t::wallbottom, wall->frontsector);
 		gl_RenderState.SetObjectColor(color1);
 		gl_RenderState.SetObjectColor2(color2);
-		state.SetAddColor(side->GetAdditiveColor(tierndx, frontsector));
+		gl_RenderState.SetAddColor(side->GetAdditiveColor(tierndx, wall->frontsector));
 		if (color1 != color2)
 		{
 			// Do gradient setup only if there actually is a gradient.

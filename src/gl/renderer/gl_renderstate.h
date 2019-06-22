@@ -411,6 +411,7 @@ public:
 		mGlossiness = glossiness;
 		mSpecularLevel = specularLevel;
 	}
+
 	void SetFog(PalEntry c, float d)
 	{
 		const float LOG2E = 1.442692f;	// = 1/log(2)

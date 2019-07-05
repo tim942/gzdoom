@@ -4268,11 +4268,12 @@ void AActor::SplashCheck()
 
 bool AActor::UpdateWaterLevel(bool dosplash)
 {
+	int oldlevel = waterlevel;
+
 	if (dosplash) SplashCheck();
 
 	double fh = -FLT_MAX;
 	bool reset = false;
-	int oldlevel = waterlevel;
 
 	waterlevel = 0;
 

@@ -810,6 +810,8 @@ void FluidSynthMIDIDevice::UnloadFluidSynth()
 	FluidSynthModule.Unload();
 }
 
+#endif
+
 //==========================================================================
 //
 //
@@ -820,7 +822,3 @@ MIDIDevice *CreateFluidSynthMIDIDevice(const char *args, int samplerate)
 {
 	return new FluidSynthMIDIDevice(args, samplerate);
 }
-
-#endif
-
-

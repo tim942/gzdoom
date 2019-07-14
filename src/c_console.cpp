@@ -551,6 +551,11 @@ CUSTOM_CVAR (Int, msgmidcolor2, 4, CVAR_ARCHIVE)
 	setmsgcolor (PRINTLEVELS+1, self);
 }
 
+FFont * C_GetDefaultHUDFont()
+{
+	return SmallFont;
+}
+
 struct TextQueue
 {
 	TextQueue (bool notify, int printlevel, const char *text)

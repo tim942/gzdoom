@@ -484,8 +484,8 @@ void player_t::SetSubtitle(int num)
 
 	// Do we have a subtitle for this log entry's voice file?
 	mysnprintf(lumpname, countof(lumpname), "$TXT_SUB_LOG%d", num);
-	auto text = GStrings.GetLanguageString(lumpname+1, FStringTable::default_table);
-	if (text != nullptr)
+	auto text = GStrings.exists(lumpname+1);
+	if (text)
 	{
 		SubtitleText = lumpname;
 		SubtitleCounter = 7 * TICRATE;

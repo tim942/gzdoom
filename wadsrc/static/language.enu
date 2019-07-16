@@ -1294,21 +1294,24 @@ TXT_FREEZEOFF = "Freeze mode off";
 TXT_STRANGE = "You feel strange...";
 TXT_STRANGER = "You feel even stranger.";
 TXT_NOTSTRANGE = "You feel like yourself again.";
-TXT_LEADBOOTSON = "LEAD BOOTS ON";
-TXT_LEADBOOTSOFF = "LEAD BOOTS OFF";
+TXT_LEADBOOTSON = "Lead Boots On";
+TXT_LEADBOOTSOFF = "Lead Boots Off";
 TXT_LIGHTER = "You feel lighter";
 TXT_GRAVITY = "Gravity weighs you down";
 
 // Raven intermission
 
-TXT_IMKILLS = "KILLS";
-TXT_IMITEMS = "ITEMS";
-TXT_IMSECRETS = "SECRETS";
-TXT_IMTIME = "TIME";
+TXT_IMKILLS = "Kills";
+TXT_IMITEMS = "Items";
+TXT_IMSECRETS = "Secrets";
+TXT_IMTIME = "Time";
+TXT_IMSUCKS = "Sucks";
+TXT_IMSCRT = "Scrt";
+TXT_IMPAR = "Par";
 
 // For testing the extended characters' positioning.
-//TXT_IMKILLS			= "A√Ä√Å√Ç√É√Ñ√Ö√Ü√á√à√â√ä√ã√å√ç√é";
-//TXT_IMITEMS			= "O√ê√è√ë√í√ì√î√ï√ñ√ò√ô√ö√õ√ú√ù√û√ü";
+//TXT_IMKILLS			= "A¿¡¬√ƒ≈∆«»… ÀÃÕŒ";
+//TXT_IMITEMS			= "O–œ—“”‘’÷ÿŸ⁄€‹›ﬁﬂ";
 
 RAVENQUITMSG = "ARE YOU SURE YOU WANT TO QUIT?";
 

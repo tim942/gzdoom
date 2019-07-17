@@ -421,6 +421,11 @@ class StatusScreen abstract play version("2.5")
 		}
 	}
 
+	void drawTimeFont (Font printFont, int x, int y, int t, int color) // hack hack
+	{
+		drawTime(x, y, t);
+	}
+
 
 	//====================================================================
 	//

@@ -280,7 +280,7 @@ bool HUDSprite::GetWeaponRenderStyle(DPSprite *psp, AActor *playermo, sector_t *
 	OverrideShader = -1;
 	if (RenderStyle.BlendOp == STYLEOP_Fuzz)
 	{
-		if (gl_fuzztype != 0)
+		if (gl_fuzztype != 0 && !(screen->hwcaps & RFL_NO_SHADERS))
 		{
 			// Todo: implement shader selection here
 			RenderStyle = LegacyRenderStyles[STYLE_Translucent];

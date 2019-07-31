@@ -429,12 +429,10 @@ void FGLRenderer::DrawTexture(FTexture *img, DrawParms &parms)
 	}
 	
 	// scissor test doesn't use the current viewport for the coordinates, so use real screen coordinates
-	int btm = (SCREENHEIGHT - screen->GetHeight()) / 2;
-	btm = SCREENHEIGHT - btm;
-
 	glEnable(GL_SCISSOR_TEST);
-	int space = (static_cast<OpenGLFrameBuffer*>(screen)->GetTrueHeight()-screen->GetHeight())/2;
-	glScissor(parms.lclip, btm - parms.dclip + space, parms.rclip - parms.lclip, parms.dclip - parms.uclip);
+	glScissor(GLRenderer->ScreenToWindowX(parms.lclip), GLRenderer->ScreenToWindowY(parms.dclip), 
+		GLRenderer->ScreenToWindowX(parms.rclip) - GLRenderer->ScreenToWindowX(parms.lclip), 
+		GLRenderer->ScreenToWindowY(parms.dclip) - GLRenderer->ScreenToWindowY(parms.uclip));
 	
 	gl_SetRenderStyle(parms.style, !parms.masked, false);
 	if (img->bHasCanvas)
@@ -478,7 +476,8 @@ void FGLRenderer::DrawTexture(FTexture *img, DrawParms &parms)
 
 	gl_RenderState.EnableAlphaTest(true);
 	
-	glScissor(0, 0, screen->GetWidth(), screen->GetHeight());
+	const auto &viewport = GLRenderer->mScreenViewport;
+	glScissor(viewport.left, viewport.top, viewport.width, viewport.height);
 	glDisable(GL_SCISSOR_TEST);
 	gl_RenderState.SetTextureMode(TM_MODULATE);
 	gl_RenderState.BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

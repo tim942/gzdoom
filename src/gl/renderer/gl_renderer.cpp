@@ -159,8 +159,8 @@ void FGLRenderer::SetOutputViewport(GL_IRECT *bounds)
 	int trueheight = framebuffer->GetTrueHeight();	// ugh...
 	int bars = (trueheight - framebuffer->GetHeight()) / 2;
 
-	int vw = viewwidth;
-	int vh = viewheight;
+	int vw = realviewwidth;
+	int vh = realviewheight;
 
 	// The entire renderable area, including the 2D HUD
 	mScreenViewport.left = 0;

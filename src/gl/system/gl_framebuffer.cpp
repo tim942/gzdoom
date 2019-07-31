@@ -164,12 +164,13 @@ void OpenGLFrameBuffer::InitializeState()
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	int trueH = GetTrueHeight();
-	int h = GetHeight();
-	glViewport(0, (trueH - h)/2, GetWidth(), GetHeight()); 
+	//int trueH = GetTrueHeight();
+	//int h = GetHeight();
+	//glViewport(0, (trueH - h)/2, GetWidth(), GetHeight()); 
 
-	Begin2D(false);
 	GLRenderer->Initialize();
+	GLRenderer->SetOutputViewport(nullptr);
+	Begin2D(false);
 }
 
 //==========================================================================

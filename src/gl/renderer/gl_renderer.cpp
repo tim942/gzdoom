@@ -49,6 +49,7 @@
 //#include "gl/gl_intern.h"
 #include "gl/gl_functions.h"
 #include "vectors.h"
+#include "doomstat.h"
 
 #include "gl/system/gl_interface.h"
 #include "gl/system/gl_framebuffer.h"
@@ -66,6 +67,8 @@
 #include "gl/utility/gl_clock.h"
 #include "gl/utility/gl_templates.h"
 #include "gl/models/gl_models.h"
+
+EXTERN_CVAR(Int, screenblocks)
 
 //===========================================================================
 // 
@@ -122,6 +125,55 @@ FGLRenderer::~FGLRenderer()
 	if (mFBID != 0) glDeleteFramebuffersEXT(1, &mFBID);
 }
 
+//==========================================================================
+//
+// Calculates the viewport values needed for 2D and 3D operations
+//
+//==========================================================================
+
+void FGLRenderer::SetOutputViewport(GL_IRECT *bounds)
+{
+	if (bounds)
+	{
+		mOutputViewport = *bounds;
+		mOutputViewportLB = *bounds;
+		return;
+	}
+
+	int height, width;
+
+	// Special handling so the view with a visible status bar displays properly
+
+	if (screenblocks >= 10)
+	{
+		height = framebuffer->GetHeight();
+		width = framebuffer->GetWidth();
+	}
+	else
+	{
+		height = (screenblocks*framebuffer->GetHeight() / 10) & ~7;
+		width = (screenblocks*framebuffer->GetWidth() / 10);
+	}
+
+	int trueheight = framebuffer->GetTrueHeight();	// ugh...
+	int bars = (trueheight - framebuffer->GetHeight()) / 2;
+
+	int vw = viewwidth;
+	int vh = viewheight;
+
+	// Letterboxed viewport for the main scene
+	mOutputViewportLB.left = viewwindowx;
+	mOutputViewportLB.top = trueheight - bars - (height + viewwindowy - ((height - vh) / 2));
+	mOutputViewportLB.width = vw;
+	mOutputViewportLB.height = height;
+
+	// Entire canvas for player sprites
+	mOutputViewport.left = 0;
+	mOutputViewport.top = (trueheight - framebuffer->GetHeight()) / 2;
+	mOutputViewport.width = framebuffer->GetWidth();
+	mOutputViewport.height = framebuffer->GetHeight();
+}
+
 //===========================================================================
 // 
 //
@@ -135,6 +187,7 @@ void FGLRenderer::SetupLevel()
 
 void FGLRenderer::Begin2D()
 {
+	glViewport(mOutputViewport.left, mOutputViewport.top, mOutputViewport.width, mOutputViewport.height);
 	gl_RenderState.EnableFog(false);
 	gl_RenderState.Set2DMode(true);
 }

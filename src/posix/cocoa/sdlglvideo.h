@@ -62,6 +62,9 @@ public:
 	virtual bool IsFullscreen();
 	virtual void SetVSync(bool vsync);
 
+	int GetClientWidth();
+	int GetClientHeight();
+
 	int GetTrueHeight() { return GetHeight(); }
 
 protected:

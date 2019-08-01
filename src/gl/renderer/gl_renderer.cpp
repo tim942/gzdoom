@@ -439,7 +439,7 @@ void FGLRenderer::DrawTexture(FTexture *img, DrawParms &parms)
 	glEnable(GL_SCISSOR_TEST);
 	glScissor(GLRenderer->ScreenToWindowX(parms.lclip), GLRenderer->ScreenToWindowY(parms.dclip), 
 		GLRenderer->ScreenToWindowX(parms.rclip) - GLRenderer->ScreenToWindowX(parms.lclip), 
-		GLRenderer->ScreenToWindowY(parms.dclip) - GLRenderer->ScreenToWindowY(parms.uclip));
+		GLRenderer->ScreenToWindowY(parms.uclip) - GLRenderer->ScreenToWindowY(parms.dclip));
 	
 	gl_SetRenderStyle(parms.style, !parms.masked, false);
 	if (img->bHasCanvas)

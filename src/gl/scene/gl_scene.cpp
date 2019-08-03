@@ -93,6 +93,7 @@ CVAR(Bool, gl_forcemultipass, false, 0)
 
 EXTERN_CVAR (Bool, cl_capfps)
 EXTERN_CVAR (Bool, r_deathcamera)
+EXTERN_CVAR(Int, screenblocks)
 
 
 extern int viewpitch;
@@ -906,7 +907,7 @@ sector_t * FGLRenderer::RenderViewpoint (AActor * camera, GL_IRECT * bounds, flo
 		clipper.SafeAddClipRangeRealAngles(ViewAngle.BAMs() + a1, ViewAngle.BAMs() - a1);
 
 		ProcessScene(toscreen);
-		if (mainview) EndDrawScene(retval);	// do not call this for camera textures.
+		if (mainview && (toscreen || screenblocks > 10)) EndDrawScene(retval);	// do not call this for camera textures.
 		eye->TearDown();
 	}
 	stereo3dMode.TearDown();

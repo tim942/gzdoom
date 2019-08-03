@@ -612,16 +612,6 @@ void FGLRenderer::Clear(int left, int top, int right, int bottom, int palcolor, 
 	
 	rt = screen->GetHeight() - top;
 	
-	int space = (static_cast<OpenGLFrameBuffer*>(screen)->GetTrueHeight()-screen->GetHeight())/2;	// ugh...
-	rt += space;
-	/*
-	if (!m_windowed && (m_trueHeight != m_height))
-	{
-		offY = (m_trueHeight - m_height) / 2;
-		rt += offY;
-	}
-	*/
-	
 	glEnable(GL_SCISSOR_TEST);
 	glScissor(left, rt - height, width, height);
 	

@@ -274,7 +274,7 @@ class StatusScreen abstract play version("2.5")
 		// Adjustment for different font sizes for map name and 'finished'.
 		y -= ((mapname.mFont.GetHeight() - finished.mFont.GetHeight()) * CleanYfac) / 4;
 
-		if (authortexts[0])
+		if (authortexts[0].Length() != 0)
 			y = DrawAuthor(y, authortexts[0]);
 
 		// draw "Finished!"

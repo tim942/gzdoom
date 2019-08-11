@@ -580,7 +580,6 @@ int FPNGTexture::CopyTrueColorPixels(FBitmap *bmp, int x, int y, int rotate, FCo
 				pe[i].r = lump->ReadUInt8();
 				pe[i].g = lump->ReadUInt8();
 				pe[i].b = lump->ReadUInt8();
-				pe[i].a = 255;
 			}
 			break;
 

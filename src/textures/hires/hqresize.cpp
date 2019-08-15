@@ -105,7 +105,7 @@ static void xbrzApplyOptions()
 		}
 		else
 		{
-			TexMan.FlushAll();
+			screen->FlushTextures();
 		}
 	}
 }

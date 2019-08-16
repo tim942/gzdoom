@@ -797,6 +797,19 @@ void FNotifyBuffer::AddString(int printlevel, FString source)
 		return;
 	}
 
+	// [MK] allow the status bar to take over notify printing
+	if (StatusBar != nullptr)
+	{
+		IFVIRTUALPTR(StatusBar, DBaseStatusBar, ProcessNotify)
+		{
+			VMValue params[] = { (DObject*)StatusBar, printlevel, &source };
+			int rv;
+			VMReturn ret(&rv);
+			VMCall(func, params, countof(params), &ret, 1);
+			if (!!rv) return;
+		}
+	}
+
 	width = DisplayWidth / active_con_scaletext();
 
 	if (AddType == APPENDLINE && Text.Size() > 0 && Text[Text.Size() - 1].PrintLevel == printlevel)
@@ -942,6 +955,12 @@ int DPrintf (int level, const char *format, ...)
 void C_FlushDisplay ()
 {
 	NotifyStrings.Clear();
+	if (StatusBar == nullptr) return;
+	IFVIRTUALPTR(StatusBar, DBaseStatusBar, FlushNotify)
+	{
+		VMValue params[] = { (DObject*)StatusBar };
+		VMCall(func, params, countof(params), nullptr, 1);
+	}
 }
 
 void C_AdjustBottom ()
@@ -1794,6 +1813,17 @@ void C_MidPrint (FFont *font, const char *msg, bool bold)
 {
 	if (StatusBar == nullptr || screen == nullptr)
 		return;
+
+	// [MK] allow the status bar to take over MidPrint
+	IFVIRTUALPTR(StatusBar, DBaseStatusBar, ProcessMidPrint)
+	{
+		FString msgstr = msg;
+		VMValue params[] = { (DObject*)StatusBar, font, &msg, bold };
+		int rv;
+		VMReturn ret(&rv);
+		VMCall(func, params, countof(params), &ret, 1);
+		if (!!rv) return;
+	}
 
 	if (msg != nullptr)
 	{

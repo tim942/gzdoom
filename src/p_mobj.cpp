@@ -588,7 +588,7 @@ bool AActor::SetState (FState *newstate, bool nofunction)
 		newstate = newstate->GetNextState();
 	} while (tics == 0);
 
-	SetDynamicLights();
+	flags8 |= MF8_RECREATELIGHTS;
 	return true;
 }
 
@@ -4704,9 +4704,9 @@ void AActor::CallBeginPlay()
 
 void AActor::PostBeginPlay ()
 {
-	SetDynamicLights();
 	PrevAngles = Angles;
 	flags7 |= MF7_HANDLENODELAY;
+	flags8 |= MF8_RECREATELIGHTS;
 }
 
 void AActor::CallPostBeginPlay()

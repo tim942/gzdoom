@@ -785,17 +785,11 @@ void AActor::SetDynamicLights()
 		AttachLight(count++, def);
 	}
 
-	if (LightAssociations.Size() > 0)
+	for (const auto asso : LightAssociations)
 	{
-		unsigned int i;
-
-		for (i = 0; i < LightAssociations.Size(); i++)
+		if (asso->Sprite() == sprite && (asso->Frame() == frame || asso->Frame() == -1))
 		{
-			if (LightAssociations[i]->Sprite() == sprite &&
-				(LightAssociations[i]->Frame()==frame || LightAssociations[i]->Frame()==-1))
-			{
-				AttachLight(count++, LightAssociations[i]->Light());
-			}
+			AttachLight(count++, asso->Light());
 		}
 	}
 	if (count == 0 && state->Light > 0)
@@ -871,6 +865,7 @@ int AttachLightDef(AActor *self, int _lightid, int _lightname)
 	{
 		auto userlight = self->UserLights[FindUserLight(self, lightid, true)];
 		userlight->CopyFrom(*LightDefaults[lightdef]);
+		self->flags8 |= MF8_RECREATELIGHTS;
 		return 1;
 	}
 	return 0;
@@ -914,7 +909,7 @@ int AttachLightDirect(AActor *self, int _lightid, int type, int color, int radiu
 	{
 		userlight->UnsetSpotPitch();
 	}
-
+	self->flags8 |= MF8_RECREATELIGHTS;
 	return 1;
 }
 
@@ -951,8 +946,10 @@ int RemoveLight(AActor *self, int _lightid)
 	{
 		delete self->UserLights[userlight];
 		self->UserLights.Delete(userlight);
+		self->flags8 |= MF8_RECREATELIGHTS;
+		return 1;
 	}
-	return 1;
+	return 0;
 }
 
 DEFINE_ACTION_FUNCTION_NATIVE(AActor, A_RemoveLight, RemoveLight)

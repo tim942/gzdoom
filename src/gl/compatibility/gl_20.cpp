@@ -65,7 +65,7 @@ void gl_PatchMenu()
 		for(int i = (*opt)->mValues.Size()-1; i>=0; i--)
 		{
 			// Delete 'Doom' lighting mode
-			if ((*opt)->mValues[i].Value == 2.0 || (*opt)->mValues[i].Value == 8.0)
+			if ((*opt)->mValues[i].Value == 2.0 || (*opt)->mValues[i].Value == 8.0 || (*opt)->mValues[i].Value == 16.0)
 			{
 				(*opt)->mValues.Delete(i);
 			}

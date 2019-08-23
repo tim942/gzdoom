@@ -42,6 +42,7 @@ struct FOptionMenuSettings native version("2.4")
 	int mFontColorHighlight;
 	int mFontColorSelection;
 	int mLinespacing;
+	int mOldLinespacing;
 }
 
 class OptionMenuDescriptor : MenuDescriptor native
@@ -94,6 +95,7 @@ class OptionMenu : Menu
 	bool CanScrollDown;
 	int VisBottom;
 	OptionMenuItem mFocusControl;
+	int linespacing;
 
 	//=============================================================================
 	//
@@ -114,6 +116,11 @@ class OptionMenu : Menu
 		{
 			mDesc.mItems[i].OnMenuCreated();
 		}
+
+		if (!ui_classic)
+			linespacing = OptionMenuSettings.mLinespacing;
+		else
+			linespacing = OptionMenuSettings.mOldLinespacing;
 	}
 
 	
@@ -236,7 +243,7 @@ class OptionMenu : Menu
 						}
 					}
 					y *= CleanYfac_1;
-					int	rowheight = OptionMenuSettings.mLinespacing * CleanYfac_1;
+					int	rowheight = linespacing * CleanYfac_1;
 					int maxitems = (screen.GetHeight() - rowheight - y) / rowheight + 1;
 
 					mDesc.mScrollPos = MAX (0, mDesc.mItems.Size() - maxitems + mDesc.mScrollTop);
@@ -369,7 +376,7 @@ class OptionMenu : Menu
 		}
 		else
 		{
-			int yline = (y / OptionMenuSettings.mLinespacing);
+			int yline = (y / linespacing);
 			if (yline >= mDesc.mScrollTop)
 			{
 				yline += mDesc.mScrollPos;
@@ -438,7 +445,7 @@ class OptionMenu : Menu
 			}
 		}
 		mDesc.mDrawTop = y;
-		int fontheight = OptionMenuSettings.mLinespacing * CleanYfac_1;
+		int fontheight = linespacing * CleanYfac_1;
 		y *= CleanYfac_1;
 
 		int indent = GetIndent();

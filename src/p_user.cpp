@@ -90,6 +90,7 @@
 #include "p_acs.h"
 #include "events.h"
 #include "gstrings.h"
+#include "s_music.h"
 
 static FRandom pr_skullpop ("SkullPop");
 

@@ -45,6 +45,7 @@
 #include "m_argv.h"
 #include "st_console.h"
 #include "version.h"
+#include "s_music.h"
 
 
 #define ZD_UNUSED(VARIABLE) ((void)(VARIABLE))

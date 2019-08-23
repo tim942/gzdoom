@@ -62,6 +62,7 @@
 #include "g_levellocals.h"
 #include "vm.h"
 #include "utf8.h"
+#include "s_music.h"
 
 
 #include "gi.h"
@@ -1317,6 +1318,7 @@ void C_FullConsole ()
 		gamestate = GS_FULLCONSOLE;
 		level.Music = "";
 		S_Start ();
+		S_StartMusic();
 		P_FreeLevelData ();
 		V_SetBlend (0,0,0,0);
 	}

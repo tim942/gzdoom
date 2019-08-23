@@ -88,6 +88,7 @@
 #include "actorinlines.h"
 #include "i_time.h"
 #include "p_maputl.h"
+#include "s_music.h"
 
 void STAT_StartNewGame(const char *lev);
 void STAT_ChangeLevel(const char *newl);
@@ -2088,6 +2089,12 @@ void FLevelLocals::SetMusicVolume(float f)
 	I_SetMusicVolume(f);
 }
 
+void FLevelLocals::SetMusic()
+{
+	if (cdtrack == 0 || !S_ChangeCDMusic(cdtrack, cdid))
+		S_ChangeMusic(Music, musicorder);
+}
+
 //==========================================================================
 // IsPointInMap
 //
@@ -2257,3 +2264,4 @@ DEFINE_ACTION_FUNCTION(FLevelLocals, StartIntermission)
 	F_StartIntermission(seq, (uint8_t)state);
 	return 0;
 }
+

@@ -48,6 +48,7 @@
 #include "r_data/sprites.h"
 #include "vm.h"
 #include "atterm.h"
+#include "s_music.h"
 
 // MACROS ------------------------------------------------------------------
 

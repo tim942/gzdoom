@@ -39,6 +39,7 @@
 
 #include "v_text.h"
 #include "menu/menu.h"
+#include "s_music.h"
 
 static uint32_t	nummididevices;
 static bool		nummididevicesset;

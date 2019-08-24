@@ -45,6 +45,15 @@
 #include "d_player.h"
 
 EXTERN_CVAR(String, language)
+EXTERN_CVAR(Bool, ui_classic)
+
+void RemoveKanjiLanguages()
+{
+	if (language[0] == 'j' && language[1] == 'p')
+		language = "pl";
+	else if (language[0] == 'k' && language[1] == 'o')
+		language = "it";
+}
 
 //==========================================================================
 //
@@ -462,6 +471,9 @@ void FStringTable::InsertString(int lumpnum, int langid, FName label, const FStr
 
 void FStringTable::UpdateLanguage()
 {
+	if (ui_classic)
+		RemoveKanjiLanguages();
+
 	size_t langlen = strlen(language);
 
 	int LanguageID = (langlen < 2 || langlen > 3) ?

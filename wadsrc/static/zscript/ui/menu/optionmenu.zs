@@ -480,7 +480,7 @@ class OptionMenu : Menu
 				if (((MenuTime() % 8) < 6) || GetCurrentMenu() != self)
 				{
 					if (ui_classic)
-						DrawOptionTextVGA(cur_indent + 3 * CleanXfac_1, y-fontheight+ 4 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "◄");
+						DrawOptionTextVGA(cur_indent + 3*CleanXfac_1, y+fontheight-10*CleanYfac_1, OptionMenuSettings.mFontColorSelection, "\xd", false, false);
 					else
 						DrawOptionText(cur_indent + 3 * CleanXfac_1, y, OptionMenuSettings.mFontColorSelection, "◄");
 				}
@@ -495,14 +495,14 @@ class OptionMenu : Menu
 		if (CanScrollUp)
 		{
 			if (ui_classic)
-				DrawOptionTextVGA(3 * CleanXfac_1, ytop, OptionMenuSettings.mFontColorSelection, "▲");
+				DrawOptionTextVGA(3 * CleanXfac_1, ytop + 2 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "\x1a", false, false);
 			else
 				DrawOptionText(screen.GetWidth() - 11 * CleanXfac_1, ytop, OptionMenuSettings.mFontColorSelection, "▲");
 		}
 		if (CanScrollDown)
 		{
 			if (ui_classic)
-				DrawOptionTextVGA(3 * CleanXfac_1 , y - 8 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "▼");
+				DrawOptionTextVGA(3 * CleanXfac_1 , y - 10 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "\x1b", false, false);
 			else
 				DrawOptionText(screen.GetWidth() - 11 * CleanXfac_1 , y - 8 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "▼");
 		}

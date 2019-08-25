@@ -420,8 +420,19 @@ class OptionMenu : Menu
 
 	virtual int GetIndent()
 	{
-		int indent = max(0, (mDesc.mIndent + 40) - CleanWidth_1 / 2);
-		return screen.GetWidth() / 2 + indent * CleanXfac_1;
+		int indent;
+
+		if (ui_classic && screen.GetWidth() < 640)
+		{
+			indent = mDesc.mIndent;
+			indent = (indent - 106) * CleanXfac_1 + screen.GetWidth() / 2;
+		}
+		else
+		{
+			indent = max(0, (mDesc.mIndent + 40) - CleanWidth_1 / 2);
+			indent = screen.GetWidth() / 2 + indent * CleanXfac_1;
+		}
+		return indent;
 	}
 
 	override void Drawer ()
@@ -484,16 +495,16 @@ class OptionMenu : Menu
 		if (CanScrollUp)
 		{
 			if (ui_classic)
-				DrawOptionTextVGA(3 * CleanXfac_1, ytop + 4 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "▲");
+				DrawOptionTextVGA(3 * CleanXfac_1, ytop, OptionMenuSettings.mFontColorSelection, "▲");
 			else
 				DrawOptionText(screen.GetWidth() - 11 * CleanXfac_1, ytop, OptionMenuSettings.mFontColorSelection, "▲");
 		}
 		if (CanScrollDown)
 		{
 			if (ui_classic)
-				DrawOptionTextVGA(3 * CleanXfac_1 , y - 15 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "▼");
+				DrawOptionTextVGA(3 * CleanXfac_1 , y - 8 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "▼");
 			else
-				DrawOptionText(screen.GetWidth() - 11 * CleanXfac_1 , y - 8*CleanYfac_1, OptionMenuSettings.mFontColorSelection, "▼");
+				DrawOptionText(screen.GetWidth() - 11 * CleanXfac_1 , y - 8 * CleanYfac_1, OptionMenuSettings.mFontColorSelection, "▼");
 		}
 		Super.Drawer();
 	}

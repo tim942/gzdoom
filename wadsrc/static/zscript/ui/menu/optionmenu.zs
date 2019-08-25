@@ -422,7 +422,7 @@ class OptionMenu : Menu
 	{
 		int indent;
 
-		if (ui_classic && screen.GetWidth() < 640)
+		if (ui_classic && screen.GetWidth() < 400)
 		{
 			indent = mDesc.mIndent;
 			indent = (indent - 106) * CleanXfac_1 + screen.GetWidth() / 2;

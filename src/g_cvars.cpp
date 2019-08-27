@@ -223,4 +223,6 @@ CUSTOM_CVAR(String, language, "auto", CVAR_ARCHIVE | CVAR_NOINITCALL | CVAR_GLOB
 		if (Level->info != nullptr) Level->LevelName = Level->info->LookupLevelName();
 	}
 	UpdateGenericUI(ui_generic);
+	if (ui_classic)
+		DisableGenericUI(true);
 }

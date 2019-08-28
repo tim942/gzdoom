@@ -189,9 +189,13 @@ void UpdateGenericUI(bool cvar)
 	}
 }
 
+EXTERN_CVAR(Bool, ui_classic);
+
 CUSTOM_CVAR(Bool, ui_generic, false, CVAR_NOINITCALL) // This is for allowing to test the generic font system with all languages
 {
-	UpdateGenericUI(self);
+	if (ui_classic && self)
+		self = false;
+	else UpdateGenericUI(self);
 }
 
 void DisableGenericUI(bool cvar)
@@ -209,6 +213,8 @@ void DisableGenericUI(bool cvar)
 
 CUSTOM_CVAR(Bool, ui_classic, true, CVAR_ARCHIVE | CVAR_NOINITCALL)
 {
+	if (ui_generic && self)
+		ui_generic = false;
 	DisableGenericUI(self);
 	vid_scalemode.Callback();
 	vid_scalefactor.Callback();

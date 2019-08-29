@@ -443,7 +443,7 @@ class NewPlayerMenu : OptionMenu
 
 	override int GetIndent()
 	{
-		return Super.GetIndent() - (ui_classic? 100 : 75)*CleanXfac_1;
+		return Super.GetIndent() - (ui_classic && screen.GetWidth() < 640? 125 : 75)*CleanXfac_1;
 	}
 
 

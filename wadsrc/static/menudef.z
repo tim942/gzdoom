@@ -204,6 +204,8 @@ OptionMenu "GLPrefOptions"
 	Option "$GLPREFMNU_PARTICLESTYLE",			gl_particles_style,				"Particles"
 	Slider "$GLPREFMNU_AMBLIGHT",				gl_light_ambient,				1.0, 255.0, 5.0
 	Option "$GLPREFMNU_RENDERQUALITY",			gl_render_precise,				"Precision"
+	Slider "Wall Cull Distance",				"gl_linedistancecull",	4000.0, 16000.0, 1000.0, 0
+	StaticText " "
     Option "Use vertex buffer",					gl_usevbo,						"VBOModes"
 	Option "$GLPREFMNU_VRMODE",					vr_mode, 						"VRMode"
 	Option "$GLPREFMNU_VRQUADSTEREO",			vr_enable_quadbuffered,			"OnOff"

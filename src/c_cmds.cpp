@@ -1355,11 +1355,15 @@ CCMD(angleconvtest)
 
 EXTERN_CVAR(Float, r_spritedistancecull)
 EXTERN_CVAR(Float, r_linedistancecull)
+EXTERN_CVAR(Float, gl_spritedistancecull)
+EXTERN_CVAR(Float, gl_linedistancecull)
 
 CCMD(culloff)
 {
 		r_spritedistancecull = 0.0;
 		r_linedistancecull = 0.0;
+		gl_spritedistancecull = 0.0;
+		gl_linedistancecull = 0.0;
 }
 
 //============================================================================

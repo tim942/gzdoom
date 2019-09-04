@@ -578,11 +578,11 @@ void GLSprite::PerformSpriteClipAdjustment(AActor *thing, const DVector2 &thingp
 //
 //==========================================================================
 
-CVAR(Float, gl_sprite_distance_cull, 0, CVAR_ARCHIVE | CVAR_GLOBALCONFIG)
+CVAR(Float, gl_spritedistancecull, 4000.0, CVAR_ARCHIVE | CVAR_GLOBALCONFIG)
 
 inline bool IsDistanceCulled(AActor* thing)
 {
-	double culldist = gl_sprite_distance_cull * gl_sprite_distance_cull;
+	double culldist = gl_spritedistancecull * gl_spritedistancecull;
 	if (culldist <= 0.0)
 		return false;
 

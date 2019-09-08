@@ -67,7 +67,7 @@ CUSTOM_CVAR (Int, gl_light_ambient, 20, CVAR_ARCHIVE | CVAR_GLOBALCONFIG)
 }
 
 CVAR(Int, gl_weaponlight, 8, CVAR_ARCHIVE);
-CVAR(Bool,gl_enhanced_nightvision,true,CVAR_ARCHIVE)
+CVAR(Bool,gl_enhanced_nightvision,false,CVAR_ARCHIVE)
 CVAR(Bool, gl_brightfog, false, CVAR_ARCHIVE);
 
 

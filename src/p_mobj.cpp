@@ -1341,7 +1341,7 @@ bool AActor::Massacre ()
 //
 //----------------------------------------------------------------------------
 
-void P_ExplodeMissile (AActor *mo, line_t *line, AActor *target, bool onsky)
+void P_ExplodeMissile (AActor *mo, line_t *line, AActor *target, bool onsky, FName damageType)
 {
 	// [ZZ] line damage callback
 	if (line)
@@ -1373,7 +1373,7 @@ void P_ExplodeMissile (AActor *mo, line_t *line, AActor *target, bool onsky)
 			if (nextstate == NULL) nextstate = mo->FindState(NAME_Death, NAME_Extreme);
 		}
 	}
-	if (nextstate == NULL) nextstate = mo->FindState(NAME_Death);
+	if (nextstate == NULL) nextstate = mo->FindState(NAME_Death, damageType);
 	
 	if (onsky || (line != NULL && line->special == Line_Horizon))
 	{

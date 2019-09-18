@@ -429,6 +429,10 @@ void DLoadSaveMenu::NotifyNewSave (const char *file, const char *title, bool okF
 		if (quickSaveSlot == NULL) quickSaveSlot = node;
 		LastAccessed = LastSaved = index;
 	}
+	else
+	{
+		LastAccessed = ++LastSaved;
+	}
 }
 
 void M_NotifyNewSave (const char *file, const char *title, bool okForQuicksave)

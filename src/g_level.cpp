@@ -789,7 +789,7 @@ void G_DoCompleted (void)
 	wminfo.current = level.MapName;
 
 	if (deathmatch &&
-		(*dmflags & DF_SAME_LEVEL) &&
+		(dmflags & DF_SAME_LEVEL) &&
 		!(level.flags & LEVEL_CHANGEMAPCHEAT))
 	{
 		wminfo.next = level.MapName;
@@ -802,7 +802,7 @@ void G_DoCompleted (void)
 		level_info_t *nextinfo = FindLevelInfo (nextlevel, false);
 		if (nextinfo == NULL || strncmp (nextlevel, "enDSeQ", 6) == 0)
 		{
-			wminfo.next = "";
+			wminfo.next = nextlevel;
 			wminfo.LName1.SetInvalid();
 			wminfo.nextname = "";
 			wminfo.nextauthor = "";

@@ -36,7 +36,8 @@
 
 #include "i_musicinterns.h"
 #include "v_text.h"
-#include "i_system.h"
+#include "doomerrors.h"
+#include "i_soundfont.h"
 
 #include "timiditypp/timidity.h"
 #include "timiditypp/instrum.h"

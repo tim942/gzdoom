@@ -36,8 +36,8 @@
 
 #include "i_musicinterns.h"
 #include "w_wad.h"
-#include "i_system.h"
-#include "opnmidi/opnmidi.h"
+#include "doomerrors.h"
+#include "opnmidi.h"
 #include "i_soundfont.h"
 
 class OPNMIDIDevice : public SoftSynthMIDIDevice

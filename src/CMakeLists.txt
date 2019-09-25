@@ -1229,6 +1229,7 @@ set (PCH_SOURCES
 	sound/musicformats/music_midistream.cpp
 	sound/musicformats/music_opl.cpp
 	sound/musicformats/music_stream.cpp
+	sound/musicformats/music_xa.cpp
 	sound/oplsynth/fmopl.cpp
 	sound/oplsynth/musicblock.cpp
 	sound/oplsynth/oplio.cpp

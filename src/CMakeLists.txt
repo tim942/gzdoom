@@ -482,8 +482,6 @@ endif()
 # Start defining source files for ZDoom
 set( PLAT_WIN32_SOURCES
 	win32/hardware.cpp
-	win32/helperthread.cpp
-	win32/i_cd.cpp
 	win32/i_crash.cpp
 	win32/i_input.cpp
 	win32/i_keyboard.cpp
@@ -498,7 +496,6 @@ set( PLAT_WIN32_SOURCES
 	win32/win32gliface.cpp
 	win32/win32video.cpp )
 set( PLAT_POSIX_SOURCES
-	posix/i_cd.cpp
 	posix/i_steam.cpp )
 set( PLAT_SDL_SOURCES
 	posix/sdl/crashcatcher.c
@@ -1140,7 +1137,6 @@ set (PCH_SOURCES
 	sound/music/i_soundfont.cpp
 	sound/backend/i_sound.cpp
 	sound/music/music_config.cpp
-	sound/musicformats/music_cd.cpp
 	events.cpp
 	atterm.cpp
 )

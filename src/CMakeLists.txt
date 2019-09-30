@@ -1141,8 +1141,6 @@ set (PCH_SOURCES
 	sound/backend/i_sound.cpp
 	sound/music/music_config.cpp
 	sound/musicformats/music_cd.cpp
-	sound/musicformats/music_midistream.cpp
-	sound/musicformats/music_stream.cpp
 	events.cpp
 	atterm.cpp
 )

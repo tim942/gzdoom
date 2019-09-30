@@ -73,7 +73,7 @@ void Mac_I_FatalError(const char* const message)
 }
 
 
-static void I_DetectOS()
+void I_DetectOS()
 {
 	SInt32 majorVersion = 0;
 	Gestalt(gestaltSystemVersionMajor, &majorVersion);
@@ -152,7 +152,6 @@ void OriginalMainTry(int argc, char** argv)
 	progdir = [[exePath stringByDeletingLastPathComponent] UTF8String];
 	progdir += "/";
 
-	I_DetectOS();
 	D_DoomMain();
 }
 

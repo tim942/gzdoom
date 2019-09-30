@@ -972,7 +972,7 @@ void DoMain (HINSTANCE hInstance)
 					}
 					else
 					{
-						atterm (UnWTS);
+						atexit (UnWTS);
 					}
 				}
 			}
@@ -984,7 +984,7 @@ void DoMain (HINSTANCE hInstance)
 		WinHeight = cRect.bottom;
 
 		CoInitialize (NULL);
-		atterm (UnCOM);
+		atexit (UnCOM);
 
 		C_InitConsole (((WinWidth / 8) + 2) * 8, (WinHeight / 12) * 8, false);
 

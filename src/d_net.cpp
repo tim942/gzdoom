@@ -1663,7 +1663,7 @@ static void SendSetup (uint32_t playersdetected[MAXNETNODES], uint8_t gotsetup[M
 // Works out player numbers among the net participants
 //
 
-void D_CheckNetGame (void)
+bool D_CheckNetGame (void)
 {
 	const char *v;
 	int i;
@@ -1684,8 +1684,13 @@ void D_CheckNetGame (void)
 			"\nIf the game is running well below expected speeds, use netmode 0 (P2P) instead.\n");
 	}
 
+	int result = I_InitNetwork ();
 	// I_InitNetwork sets doomcom and netgame
-	if (I_InitNetwork ())
+	if (result == -1)
+	{
+		return false;
+	}
+	else if (result > 0)
 	{
 		// For now, stop auto selecting PacketServer, as it's more likely to cause confusion.
 		//NetMode = NET_PacketServer;
@@ -1749,6 +1754,8 @@ void D_CheckNetGame (void)
 
 	if (!batchrun) Printf ("player %i of %i (%i nodes)\n",
 			consoleplayer+1, doomcom.numplayers, doomcom.numnodes);
+	
+	return true;
 }
 
 

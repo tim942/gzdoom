@@ -47,7 +47,6 @@
 #include "v_text.h"
 #include "version.h"
 #include "videomodes.h"
-#include "atterm.h"
 
 #include "gl/renderer/gl_renderer.h"
 #include "gl/system/gl_framebuffer.h"
@@ -742,7 +741,6 @@ void I_InitGraphics()
 	ticker.SetGenericRepDefault(val, CVAR_Bool);
 
 	Video = new CocoaVideo;
-	atterm(I_ShutdownGraphics);
 }
 
 

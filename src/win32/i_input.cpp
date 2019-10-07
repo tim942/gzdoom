@@ -90,7 +90,6 @@
 #include "version.h"
 #include "events.h"
 #include "doomerrors.h"
-#include "atterm.h"
 
 // Prototypes and declarations.
 #include "rawinput.h"
@@ -626,7 +625,6 @@ bool I_InitInput (void *hwnd)
 	HRESULT hr;
 
 	Printf ("I_InitInput\n");
-	atterm(I_ShutdownInput);
 
 	noidle = !!Args->CheckParm ("-noidle");
 	g_pdi = NULL;

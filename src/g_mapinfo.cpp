@@ -49,7 +49,6 @@
 #include "autosegs.h"
 #include "g_levellocals.h"
 #include "events.h"
-#include "atterm.h"
 
 TArray<cluster_info_t> wadclusterinfos;
 TArray<level_info_t> wadlevelinfos;
@@ -2354,7 +2353,7 @@ void FMapInfoParser::ParseMapInfo (int lump, level_info_t &gamedefaults, level_i
 
 void DeinitIntermissions();
 
-static void ClearMapinfo()
+void G_ClearMapinfo()
 {
 	wadclusterinfos.Clear();
 	wadlevelinfos.Clear();
@@ -2379,9 +2378,6 @@ void G_ParseMapInfo (FString basemapinfo)
 {
 	int lump, lastlump = 0;
 	level_info_t gamedefaults;
-
-	ClearMapinfo();
-	atterm(ClearMapinfo);
 
 	// Parse the default MAPINFO for the current game. This lump *MUST* come from zdoom.pk3.
 	if (basemapinfo.IsNotEmpty())

@@ -82,7 +82,6 @@
 #include "g_level.h"
 #include "doomstat.h"
 #include "textures/bitmap.h"
-#include "atterm.h"
 
 #include "optwin32.h"
 
@@ -103,6 +102,8 @@ extern void LayoutMainWindow(HWND hWnd, HWND pane);
 
 // PUBLIC FUNCTION PROTOTYPES ----------------------------------------------
 
+void DestroyCustomCursor();
+
 // PRIVATE FUNCTION PROTOTYPES ---------------------------------------------
 
 static void CalculateCPUSpeed();
@@ -110,7 +111,6 @@ static void CalculateCPUSpeed();
 static HCURSOR CreateCompatibleCursor(FTexture *cursorpic);
 static HCURSOR CreateAlphaCursor(FTexture *cursorpic);
 static HCURSOR CreateBitmapCursor(int xhot, int yhot, HBITMAP and_mask, HBITMAP color_mask);
-static void DestroyCustomCursor();
 
 // EXTERNAL DATA DECLARATIONS ----------------------------------------------
 
@@ -715,7 +715,6 @@ bool I_SetCursor(FTexture *cursorpic)
 		// Replace the existing cursor with the new one.
 		DestroyCustomCursor();
 		CustomCursor = cursor;
-		atterm(DestroyCustomCursor);
 	}
 	else
 	{
@@ -923,7 +922,7 @@ static HCURSOR CreateBitmapCursor(int xhot, int yhot, HBITMAP and_mask, HBITMAP 
 //
 //==========================================================================
 
-static void DestroyCustomCursor()
+void DestroyCustomCursor()
 {
 	if (CustomCursor != NULL)
 	{

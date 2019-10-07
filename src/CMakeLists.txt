@@ -1097,7 +1097,6 @@ set (PCH_SOURCES
 	sound/backend/i_sound.cpp
 	sound/music/music_config.cpp
 	events.cpp
-	atterm.cpp
 )
 
 if( ${HAVE_VM_JIT} )

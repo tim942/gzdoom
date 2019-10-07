@@ -6357,11 +6357,11 @@ AActor *P_SpawnMissileXYZ (DVector3 pos, AActor *source, AActor *dest, PClassAct
 		return nullptr;
 	}
 
-	if (dest == NULL)
+	if (dest == nullptr)
 	{
 		Printf ("P_SpawnMissilyXYZ: Tried to shoot %s from %s with no dest\n",
 			type->TypeName.GetChars(), source->GetClass()->TypeName.GetChars());
-		return NULL;
+		return nullptr;
 	}
 
 	if (pos.Z != ONFLOORZ && pos.Z != ONCEILINGZ)
@@ -6370,7 +6370,8 @@ AActor *P_SpawnMissileXYZ (DVector3 pos, AActor *source, AActor *dest, PClassAct
 	}
 
 	AActor *th = Spawn (type, pos, ALLOW_REPLACE);
-	
+
+	if (th == nullptr) return nullptr;
 	P_PlaySpawnSound(th, source);
 
 	// record missile's originator
@@ -6482,6 +6483,7 @@ AActor *P_OldSpawnMissile(AActor *source, AActor *owner, AActor *dest, PClassAct
 	}
 	AActor *th = Spawn (type, source->PosPlusZ(32.), ALLOW_REPLACE);
 
+	if (th == nullptr) return nullptr;
 	P_PlaySpawnSound(th, source);
 	th->target = owner;		// record missile's originator
 
@@ -6596,8 +6598,9 @@ AActor *P_SpawnMissileAngleZSpeed (AActor *source, double z,
 
 	mo = Spawn (type, source->PosAtZ(z), ALLOW_REPLACE);
 
+	if (mo == nullptr) return nullptr;
 	P_PlaySpawnSound(mo, source);
-	if (owner == NULL) owner = source;
+	if (owner == nullptr) owner = source;
 	mo->target = owner;
 	mo->Angles.Yaw = angle;
 	mo->VelFromAngle(speed);

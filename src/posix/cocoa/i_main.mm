@@ -120,25 +120,12 @@ void I_DetectOS()
 FArgs* Args; // command line arguments
 
 
-int OriginalMainTry(int argc, char** argv)
-{
-	Args = new FArgs(argc, argv);
-
-	NSString* exePath = [[NSBundle mainBundle] executablePath];
-	progdir = [[exePath stringByDeletingLastPathComponent] UTF8String];
-	progdir += "/";
-
-	auto ret =  D_DoomMain();
-	FConsoleWindow::DeleteInstance();
-	return ret;
-}
-
 namespace
 {
 
 TArray<FString> s_argv;
 
-int OriginalMain(int argc, char** argv)
+int DoMain(int argc, char** argv)
 {
 	printf(GAMENAME" %s - %s - Cocoa version\nCompiled on %s\n\n",
 		GetVersionString(), GetGitTime(), __DATE__);
@@ -159,7 +146,15 @@ int OriginalMain(int argc, char** argv)
 	vid_vsync     = true;
 	fullscreen    = true;
 
-	return OriginalMainTry(argc, argv);
+	Args = new FArgs(argc, argv);
+
+	NSString* exePath = [[NSBundle mainBundle] executablePath];
+	progdir = [[exePath stringByDeletingLastPathComponent] UTF8String];
+	progdir += "/";
+
+	auto ret = D_DoomMain();
+	FConsoleWindow::DeleteInstance();
+	return ret;
 }
 
 } // unnamed namespace
@@ -183,6 +178,10 @@ int OriginalMain(int argc, char** argv)
 - (BOOL)application:(NSApplication*)theApplication openFile:(NSString*)filename;
 
 - (void)processEvents:(NSTimer*)timer;
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender;
+
+- (void)sendExitEvent:(id)sender;
 
 @end
 
@@ -257,7 +256,7 @@ extern bool AppActive;
 
 	argv[argc] = nullptr;
 
-	exit(OriginalMain(argc, &argv[0]));
+	exit(DoMain(argc, &argv[0]));
 }
 
 
@@ -322,6 +321,17 @@ extern bool AppActive;
 	[pool release];
 }
 
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
+{
+	[self sendExitEvent:sender];
+	return NSTerminateLater;
+}
+
+- (void)sendExitEvent:(id)sender
+{
+	throw CExitEvent(0);
+}
+
 @end
 
 
@@ -351,7 +361,7 @@ NSMenuItem* CreateApplicationMenu()
 				keyEquivalent:@""];
 	[menu addItem:[NSMenuItem separatorItem]];
 	[menu addItemWithTitle:[@"Quit " stringByAppendingString:@GAMENAME]
-					   action:@selector(terminate:)
+					action:@selector(sendExitEvent:)
 				keyEquivalent:@"q"];
 
 	NSMenuItem* menuItem = [NSMenuItem new];

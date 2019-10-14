@@ -5007,6 +5007,7 @@ AActor *P_SpawnPlayer (FPlayerStart *mthing, int playernum, int flags)
 
 	mobj = Spawn (p->cls, spawn, NO_REPLACE);
 
+	if (mobj == nullptr) return nullptr;
 	if (level.flags & LEVEL_USEPLAYERSTARTZ)
 	{
 		if (spawn.Z == ONFLOORZ)
@@ -6076,6 +6077,8 @@ foundone:
 			if (splash->SplashChunk)
 			{
 				mo = Spawn(splash->SplashChunk, pos, ALLOW_REPLACE);
+
+				if (!mo) return false;
 				mo->target = thing;
 				if (splash->ChunkXVelShift != 255)
 				{
@@ -6375,7 +6378,7 @@ AActor *P_SpawnMissileXYZ (DVector3 pos, AActor *source, AActor *dest, PClassAct
 	P_PlaySpawnSound(th, source);
 
 	// record missile's originator
-	if (owner == NULL) owner = source;
+	if (owner == nullptr) owner = source;
 	th->target = owner;
 
 	double speed = th->Speed;
@@ -6746,6 +6749,8 @@ AActor *P_SpawnPlayerMissile (AActor *source, double x, double y, double z,
 	}
 	DVector3 pos = source->Vec2OffsetZ(x, y, z);
 	AActor *MissileActor = Spawn (type, pos, ALLOW_REPLACE);
+
+	if (MissileActor == nullptr) return nullptr;
 	if (pMissileActor) *pMissileActor = MissileActor;
 	P_PlaySpawnSound(MissileActor, source);
 	MissileActor->target = source;

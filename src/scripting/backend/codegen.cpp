@@ -11288,14 +11288,6 @@ FxExpression *FxLocalVariableDeclaration::Resolve(FCompileContext &ctx)
 {
 	CHECKRESOLVED();
 
-	if (IsDynamicArray())
-	{
-		auto stackVar = new FxStackVariable(ValueType, StackOffset, ScriptPosition);
-		FArgumentList argsList;
-		clearExpr = new FxMemberFunctionCall(stackVar, "Clear", argsList, ScriptPosition);
-		SAFE_RESOLVE(clearExpr, ctx);
-	}
-
 	if (ctx.Block == nullptr)
 	{
 		ScriptPosition.Message(MSG_ERROR, "Variable declaration outside compound statement");
@@ -11352,6 +11344,15 @@ FxExpression *FxLocalVariableDeclaration::Resolve(FCompileContext &ctx)
 			}
 		}
 	}
+
+	if (IsDynamicArray())
+	{
+		auto stackVar = new FxStackVariable(ValueType, StackOffset, ScriptPosition);
+		FArgumentList argsList;
+		clearExpr = new FxMemberFunctionCall(stackVar, "Clear", argsList, ScriptPosition);
+		SAFE_RESOLVE(clearExpr, ctx);
+	}
+
 	ctx.Block->LocalVars.Push(this);
 	return this;
 }

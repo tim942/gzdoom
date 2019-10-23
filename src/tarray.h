@@ -588,6 +588,7 @@ public:
 
 	typedef TIterator<T>                       iterator;
 	typedef TIterator<const T>                 const_iterator;
+	typedef T                                  value_type;
 
 	iterator begin()
 	{
@@ -1438,6 +1439,7 @@ public:
 
 	typedef TIterator<T>                       iterator;
 	typedef TIterator<const T>                 const_iterator;
+	typedef T                                  value_type;
 
 	iterator begin()
 	{

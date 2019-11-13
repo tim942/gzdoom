@@ -113,6 +113,7 @@ struct gameinfo_t
 	FString ConfigName;
 
 	FString TitlePage;
+	bool nokeyboardcheats;
 	bool drawreadthis;
 	bool noloopfinalemusic;
 	bool intermissioncounter;

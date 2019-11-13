@@ -311,23 +311,23 @@ FName CheckCompatibility(MapData *map)
 
 //==========================================================================
 //
-// SetCompatibilityParams
+// PostProcessLevel
 //
 //==========================================================================
 
-class DLevelCompatibility : public DObject
+class DLevelPostProcessor : public DObject
 {
-	DECLARE_ABSTRACT_CLASS(DLevelCompatibility, DObject)
+	DECLARE_ABSTRACT_CLASS(DLevelPostProcessor, DObject)
 };
-IMPLEMENT_CLASS(DLevelCompatibility, true, false);
 
+IMPLEMENT_CLASS(DLevelPostProcessor, true, false);
 
-void SetCompatibilityParams(FName checksum)
+void PostProcessLevel(FName checksum)
 {
-	auto lc = Create<DLevelCompatibility>();
+	auto lc = Create<DLevelPostProcessor>();
 	for (auto cls : PClass::AllClasses)
 	{
-		if (cls->IsDescendantOf(RUNTIME_CLASS(DLevelCompatibility)))
+		if (cls->IsDescendantOf(RUNTIME_CLASS(DLevelPostProcessor)))
 		{
 			PFunction *const func = dyn_cast<PFunction>(cls->FindSymbol("Apply", false));
 			if (func == nullptr)
@@ -349,9 +349,9 @@ void SetCompatibilityParams(FName checksum)
 	}
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, OffsetSectorPlane)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, OffsetSectorPlane)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(sector);
 	PARAM_INT(planeval);
 	PARAM_FLOAT(delta);
@@ -366,17 +366,17 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, OffsetSectorPlane)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, ClearSectorTags)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, ClearSectorTags)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(sector);
 	tagManager.RemoveSectorTags(sector);
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, AddSectorTag)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, AddSectorTag)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(sector);
 	PARAM_INT(tag);
 
@@ -387,20 +387,20 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, AddSectorTag)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, ClearLineIDs)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, ClearLineIDs)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(line);
 	tagManager.RemoveLineIDs(line);
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, AddLineID)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, AddLineID)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(line);
 	PARAM_INT(tag);
-	
+
 	if ((unsigned)line < level.lines.Size())
 	{
 		tagManager.AddLineID(line, tag);
@@ -408,9 +408,9 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, AddLineID)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetThingSkills)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, SetThingSkills)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(thing);
 	PARAM_INT(skillmask);
 
@@ -421,9 +421,9 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetThingSkills)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetThingXY)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, SetThingXY)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(thing);
 	PARAM_FLOAT(x);
 	PARAM_FLOAT(y);
@@ -437,9 +437,9 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetThingXY)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetThingZ)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, SetThingZ)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(thing);
 	PARAM_FLOAT(z);
 
@@ -450,9 +450,9 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetThingZ)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetThingFlags)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, SetThingFlags)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_INT(thing);
 	PARAM_INT(flags);
 
@@ -463,9 +463,9 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetThingFlags)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetVertex)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, SetVertex)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_UINT(vertex);
 	PARAM_FLOAT(x);
 	PARAM_FLOAT(y);
@@ -478,9 +478,9 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetVertex)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetLineSectorRef)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, SetLineSectorRef)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_UINT(lineidx);
 	PARAM_UINT(sideidx);
 	PARAM_UINT(sectoridx);
@@ -499,9 +499,9 @@ DEFINE_ACTION_FUNCTION(DLevelCompatibility, SetLineSectorRef)
 	return 0;
 }
 
-DEFINE_ACTION_FUNCTION(DLevelCompatibility, GetDefaultActor)
+DEFINE_ACTION_FUNCTION(DLevelPostProcessor, GetDefaultActor)
 {
-	PARAM_SELF_PROLOGUE(DLevelCompatibility);
+	PARAM_SELF_PROLOGUE(DLevelPostProcessor);
 	PARAM_NAME(actorclass);
 	ACTION_RETURN_OBJECT(GetDefaultByName(actorclass));
 }

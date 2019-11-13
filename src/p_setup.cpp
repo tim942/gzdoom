@@ -3360,7 +3360,7 @@ void P_SetupLevel(const char *lumpname, int position, bool newGame)
 			times[0].Unclock();
 		}
 
-		SetCompatibilityParams(checksum);
+		PostProcessLevel(checksum);
 
 		times[6].Clock();
 		loader.LoopSidedefs(true);

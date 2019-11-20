@@ -159,6 +159,7 @@ struct gameinfo_t
 	FString statusbar;
 	int statusbarfile = -1;
 	FName statusbarclass;
+	FName althudclass;
 	int statusbarclassfile = -1;
 	FName MessageBoxClass;
 	FName backpacktype;

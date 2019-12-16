@@ -1909,7 +1909,7 @@ DEFINE_ACTION_FUNCTION(AAmbientSound, Tick)
 		return 0;
 
 	FAmbientSound *ambient;
-	int loop = 0;
+	EChanFlags loop = 0;
 
 	ambient = Ambients.CheckKey(self->args[0]);
 	if (ambient == NULL)
@@ -1919,7 +1919,7 @@ DEFINE_ACTION_FUNCTION(AAmbientSound, Tick)
 
 	if ((ambient->type & CONTINUOUS) == CONTINUOUS)
 	{
-		loop = CHAN_LOOP;
+		loop = CHANF_LOOP;
 	}
 
 	if (ambient->sound != FSoundID(0))
@@ -1936,7 +1936,7 @@ DEFINE_ACTION_FUNCTION(AAmbientSound, Tick)
 		// use the standard rolloff.
 		if ((self->args[2] | self->args[3]) == 0 || self->args[2] > self->args[3])
 		{
-			S_Sound(self, CHAN_BODY | loop, ambient->sound, usevol, ambient->attenuation);
+			S_Sound(self, CHAN_BODY, loop, ambient->sound, usevol, ambient->attenuation);
 		}
 		else
 		{
@@ -1947,7 +1947,7 @@ DEFINE_ACTION_FUNCTION(AAmbientSound, Tick)
 				min *= self->args[4];
 				max *= self->args[4];
 			}
-			S_SoundMinMaxDist(self, CHAN_BODY | loop, ambient->sound, usevol, min, max);
+			S_SoundMinMaxDist(self, CHAN_BODY, loop, ambient->sound, usevol, min, max);
 		}
 		if (!loop)
 		{

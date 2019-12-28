@@ -89,6 +89,7 @@
 #include "v_text.h"
 #include "version.h"
 #include "events.h"
+#include "doomerrors.h"
 #include "atterm.h"
 
 // Prototypes and declarations.

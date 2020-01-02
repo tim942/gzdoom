@@ -48,7 +48,6 @@
 #include "r_data/sprites.h"
 #include "vm.h"
 #include "s_music.h"
-#include "mididevices/mididevice.h"
 
 // MACROS ------------------------------------------------------------------
 

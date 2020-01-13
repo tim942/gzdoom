@@ -179,7 +179,31 @@ const char *KeyNames[NUM_KEYS] =
 	"axis41plus","axis41minus","axis42plus","axis42minus",	// joystick axes as buttons
 	"axis43plus","axis43minus","axis44plus","axis44minus",
 	"axis45plus","axis45minus","axis46plus","axis46minus",
-	"axis47plus","axis47minus","axis48plus","axis48minus"
+	"axis47plus","axis47minus","axis48plus","axis48minus",
+
+	"lstick2right","lstick2left","lstick2down","lstick2up",			// Gamepad axis-based buttons
+	"rstick2right","rstick2left","rstick2down","rstick2up",
+
+	"dpad2up","dpad2down","dpad2left","dpad2right",	// Gamepad buttons
+	"pad2_start","pad2_back","lthumb2","rthumb2",
+	"lshoulder2","rshoulder2","ltrigger2","rtrigger2",
+	"pad2_a", "pad2_b", "pad2_x", "pad2_y",
+
+	"lstick3right","lstick3left","lstick3down","lstick3up",			// Gamepad axis-based buttons
+	"rstick3right","rstick3left","rstick3down","rstick3up",
+
+	"dpad3up","dpad3down","dpad3left","dpad3right",	// Gamepad buttons
+	"pad3_start","pad3_back","lthumb3","rthumb3",
+	"lshoulder3","rshoulder3","ltrigger3","rtrigger3",
+	"pad3_a", "pad3_b", "pad3_x", "pad3_y",
+
+	"lstick4right","lstick4left","lstick4down","lstick4up",			// Gamepad axis-based buttons
+	"rstick4right","rstick4left","rstick4down","rstick4up",
+
+	"dpad4up","dpad4down","dpad4left","dpad4right",	// Gamepad buttons
+	"pad4_start","pad4_back","lthumb4","rthumb4",
+	"lshoulder4","rshoulder4","ltrigger4","rtrigger4",
+	"pad4_a", "pad4_b", "pad4_x", "pad4_y"
 };
 
 FKeyBindings Bindings;
@@ -229,7 +253,7 @@ static int GetConfigKeyFromName (const char *key)
 		{
 			keynum = GetKeyFromName ("[");
 		}
-		else if (stricmp (key, "RightBracket") == 0)
+		else if (stricmp (key, "qqBracket") == 0)
 		{
 			keynum = GetKeyFromName ("]");
 		}

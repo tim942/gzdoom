@@ -147,7 +147,7 @@ void FDrawInfo::DrawSprite(GLSprite *sprite, int pass)
 		{
 			if ( sprite->dynlightindex == -1)	// only set if we got no light buffer index. This covers all cases where sprite lighting is used.
 			{
-				float out[3];
+				float out[3] = {};
 				GetDynSpriteLight(gl_light_sprites ? sprite->actor : nullptr, gl_light_particles ? sprite->particle : nullptr, out);
 				gl_RenderState.SetDynLight(out[0], out[1], out[2]);
 			}

@@ -48,7 +48,7 @@ struct _ native	// These are the global variables, the struct is only here to av
 	native readonly int Net_Arbitrator;
 	native ui BaseStatusBar StatusBar;
 	native readonly Weapon WP_NOCHANGE;
-	deprecated("3.8") native readonly bool globalfreeze;
+	deprecated("3.8", "Use Actor.isFrozen() or Level.isFrozen() instead") native readonly bool globalfreeze;
 	native int LocalViewPitch;
 	native readonly @MusPlayingInfo musplaying;
 	native readonly bool generic_ui;
@@ -235,7 +235,7 @@ struct Screen native
 	
 	
 	// This is a leftover of the abandoned Inventory.DrawPowerup method.
-	deprecated("2.5") static ui void DrawHUDTexture(TextureID tex, double x, double y)
+	deprecated("2.5", "Use StatusBar.DrawTexture() instead") static ui void DrawHUDTexture(TextureID tex, double x, double y)
 	{
 		statusBar.DrawTexture(tex, (x, y), BaseStatusBar.DI_SCREEN_RIGHT_TOP, 1., (32, 32));
 	}
@@ -431,7 +431,7 @@ class Object native
 	native static double G_SkillPropertyFloat(int p);
 	native static vector3, int G_PickDeathmatchStart();
 	native static vector3, int G_PickPlayerStart(int pnum, int flags = 0);
-	deprecated("4.3") native static void S_Sound (Sound sound_id, int channel, float volume = 1, float attenuation = ATTN_NORM, float pitch = 0.0);
+	deprecated("4.3", "Use S_StartSound() instead") native static void S_Sound (Sound sound_id, int channel, float volume = 1, float attenuation = ATTN_NORM, float pitch = 0.0);
 	native static void S_StartSound (Sound sound_id, int channel, int flags = 0, float volume = 1, float attenuation = ATTN_NORM, float pitch = 0.0, float startTime = 0.0);
 	native static void S_PauseSound (bool notmusic, bool notsfx);
 	native static void S_ResumeSound (bool notsfx);
@@ -698,7 +698,7 @@ struct LevelLocals native
 	native readonly bool polygrind;
 	native readonly bool nomonsters;
 	native readonly bool allowrespawn;
-	deprecated("3.8") native bool frozen;
+	deprecated("3.8", "Use Level.isFrozen() instead") native bool frozen;
 	native readonly bool infinite_flight;
 	native readonly bool no_dlg_freeze;
 	native readonly bool keepfullinventory;
@@ -910,15 +910,15 @@ struct StringStruct native
 	native String Mid(int pos = 0, int len = 2147483647) const;
 	native void Truncate(int newlen);
 	native void Remove(int index, int remlen);
-	deprecated("4.1") native String CharAt(int pos) const;
-	deprecated("4.1") native int CharCodeAt(int pos) const;
+	deprecated("4.1", "use Left() or Mid() instead") native String CharAt(int pos) const;
+	deprecated("4.1", "use ByteAt() instead") native int CharCodeAt(int pos) const;
 	native int ByteAt(int pos) const;
 	native String Filter();
 	native int IndexOf(String substr, int startIndex = 0) const;
-	deprecated("3.5.1") native int LastIndexOf(String substr, int endIndex = 2147483647) const;
+	deprecated("3.5.1", "use RightIndexOf() instead") native int LastIndexOf(String substr, int endIndex = 2147483647) const;
 	native int RightIndexOf(String substr, int endIndex = 2147483647) const;
-	deprecated("4.1") native void ToUpper();
-	deprecated("4.1") native void ToLower();
+	deprecated("4.1", "use MakeUpper() instead") native void ToUpper();
+	deprecated("4.1", "use MakeLower() instead") native void ToLower();
 	native String MakeUpper() const;
 	native String MakeLower() const;
 	native static int CharUpper(int ch);

@@ -1131,6 +1131,7 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 	ActiveColors = 0;
 	SpaceWidth = 0;
 	FontHeight = 0;
+	int FixedWidth = 0; // hack
 
 	maxyoffs = 0;
 
@@ -1188,6 +1189,14 @@ FFont::FFont (const char *name, const char *nametemplate, const char *filetempla
 					}
 					else if (sc.Compare("FontHeight"))
 					{
+						sc.MustGetValue(false);
+						FontHeight = sc.Number;
+					}
+					else if (sc.Compare("CellSize")) // hack
+					{
+						sc.MustGetValue(false);
+						FixedWidth = sc.Number;
+						sc.MustGetToken(',');
 						sc.MustGetValue(false);
 						FontHeight = sc.Number;
 					}
@@ -1640,7 +1649,7 @@ int FFont::GetCharCode(int code, bool needpic) const
 		return code;
 	}
 	
-	// Special handling for the ÃŸ which may only exist as lowercase, so for this we need an additional upper -> lower check for all fonts aside from the generic substitution logic.
+	// Special handling for the ß which may only exist as lowercase, so for this we need an additional upper -> lower check for all fonts aside from the generic substitution logic.
 	if (code == 0x1e9e)
 	{
 		if (LastChar <= 0xdf && (!needpic || Chars[0xdf - FirstChar].Pic != nullptr))

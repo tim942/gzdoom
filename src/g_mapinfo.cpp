@@ -958,7 +958,7 @@ DEFINE_MAP_OPTION(sky1, true)
 		{
 			parse.sc.Float /= 256;
 		}
-		info->skyspeed1 = float(parse.sc.Float * (35. / 1000.));
+		info->skyspeed1 = float(parse.sc.Float * (TICRATE / 1000.));
 	}
 }
 
@@ -972,7 +972,7 @@ DEFINE_MAP_OPTION(sky2, true)
 		{
 			parse.sc.Float /= 256;
 		}
-		info->skyspeed2 = float(parse.sc.Float * (35. / 1000.));
+		info->skyspeed2 = float(parse.sc.Float * (TICRATE / 1000.));
 	}
 }
 

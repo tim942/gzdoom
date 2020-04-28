@@ -4668,12 +4668,12 @@ void AActor::HandleSpawnFlags ()
 		if (flags & MF_COUNTKILL)
 		{
 			flags &= ~MF_COUNTKILL;
-			Level->total_monsters--;
+			level.total_monsters--;
 		}
 		if (flags & MF_COUNTITEM)
 		{
 			flags &= ~MF_COUNTITEM;
-			Level->total_items--;
+			level.total_items--;
 		}
 	}
 }

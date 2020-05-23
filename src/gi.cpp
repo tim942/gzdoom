@@ -441,6 +441,7 @@ void FMapInfoParser::ParseGameInfo()
 			GAMEINFOKEY_STRING(statusscreen_dm, "statscreen_dm")
 			GAMEINFOKEY_TWODOUBLES(normforwardmove, "normforwardmove")
 			GAMEINFOKEY_TWODOUBLES(normsidemove, "normsidemove")
+			GAMEINFOKEY_BOOL(nomergepickupmsg, "nomergepickupmsg")
 
 		else
 		{

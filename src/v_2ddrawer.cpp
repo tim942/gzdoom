@@ -327,6 +327,7 @@ void F2DDrawer::SetColorOverlay(PalEntry color, float alpha, PalEntry &vertexcol
 void F2DDrawer::AddTexture(FTexture *img, DrawParms &parms)
 {
 	if (parms.style.BlendOp == STYLEOP_None) return;	// not supposed to be drawn.
+	assert(img && img->isValid());
 
 	double xscale = parms.destwidth / parms.texwidth;
 	double yscale = parms.destheight / parms.texheight;

@@ -125,7 +125,8 @@ public:
 		GLWF_NOSPLITUPPER=16,
 		GLWF_NOSPLITLOWER=32,
 		GLWF_NOSPLIT=64,
-		GLWF_TRANSLUCENT = 128
+		GLWF_TRANSLUCENT = 128,
+		GLWF_NOSLICE = 256
 	};
 
 	enum
@@ -161,9 +162,9 @@ public:
 	
 	float ViewDistance;
 
-	int lightlevel;
+	short lightlevel;
+	uint16_t flags;
 	uint8_t type;
-	uint8_t flags;
 	short rellight;
 
 	float topglowcolor[4];

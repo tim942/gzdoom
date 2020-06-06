@@ -409,7 +409,14 @@ void FDrawInfo::AddMirrorSurface(GLWall *w)
 	tcs[GLWall::LOLFT].u = tcs[GLWall::LORGT].u = tcs[GLWall::UPLFT].u = tcs[GLWall::UPRGT].u = v.X;
 	tcs[GLWall::LOLFT].v = tcs[GLWall::LORGT].v = tcs[GLWall::UPLFT].v = tcs[GLWall::UPRGT].v = v.Z;
 	newwall->MakeVertices(this, false);
+
+	bool hasDecals = newwall->seg->sidedef && newwall->seg->sidedef->AttachedDecals;
+	if (hasDecals && level.HasDynamicLights && !mDrawer->FixedColormap)
+	{
+		newwall->SetupLights(this, lightdata);
+	}
 	newwall->ProcessDecals(this);
+	newwall->dynlightindex = -1; // the environment map should not be affected by lights - only the decals.
 }
 
 //==========================================================================
@@ -510,17 +517,6 @@ void FDrawInfo::DrawDecal(GLDecal *gldecal)
 {
 	auto decal = gldecal->decal;
 	auto tex = gldecal->gltexture;
-	
-	// calculate dynamic light effect.
-	if (level.HasDynamicLights && !mDrawer->FixedColormap && gl_light_sprites)
-	{
-		// Note: This should be replaced with proper shader based lighting.
-		double x, y;
-		float out[3];
-		decal->GetXY(decal->Side, x, y);
-		GetDynSpriteLight(nullptr, x, y, gldecal->zcenter, decal->Side->lighthead, decal->Side->sector->PortalGroup, out);
-		gl_RenderState.SetDynLight(out[0], out[1], out[2]);
-	}
 
 	// alpha color only has an effect when using an alpha texture.
 	if (decal->RenderStyle.Flags & STYLEF_RedIsAlpha)

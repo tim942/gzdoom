@@ -236,11 +236,13 @@ void GLWall::ProcessDecal(HWDrawInfo *di, DBaseDecal *decal, const FVector3 &nor
 	{
 		gldecal->lightlevel = 255;
 		gldecal->rellight = 0;
+		gldecal->dynlightindex = -1;
 	}
 	else
 	{
 		gldecal->lightlevel = lightlevel;
 		gldecal->rellight = rellight + getExtraLight();
+		gldecal->dynlightindex = -1;
 	}
 
 	gldecal->Colormap = Colormap;

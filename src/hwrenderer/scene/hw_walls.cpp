@@ -195,11 +195,26 @@ void GLWall::PutWall(HWDrawInfo *di, bool translucent)
 	}
 
 
+
 	bool solid;
 	if (passflag[type] == 1) solid = true;
 	else if (type == RENDERWALL_FFBLOCK) solid = gltexture && !gltexture->isMasked();
 	else solid = false;
-	if (solid) ProcessDecals(di);
+
+	bool hasDecals = solid && seg->sidedef && seg->sidedef->AttachedDecals;
+	if (hasDecals)
+	{
+		// If we want to use the light infos for the decal we cannot delay the creation until the render pass.
+		if (screen->hwcaps & RFL_BUFFER_STORAGE)
+		{
+			if (level.HasDynamicLights && di->FixedColormap == CM_DEFAULT && gltexture != nullptr && !(screen->hwcaps & RFL_NO_SHADERS))
+			{
+				SetupLights(di, lightdata);
+			}
+		}
+		ProcessDecals(di);
+	}
+
 
 	di->AddWall(this);
 

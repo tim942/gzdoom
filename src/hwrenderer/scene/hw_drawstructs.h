@@ -384,6 +384,7 @@ struct GLDecal
 	int rellight;
 	float alpha;
 	FColormap Colormap;
+	int dynlightindex;
 	sector_t *frontsector;
 	FVector3 Normal;
 

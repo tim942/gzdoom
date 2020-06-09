@@ -2241,8 +2241,9 @@ DEFINE_ACTION_FUNCTION(AActor, CheckLOF)
 		{
 			if (range > 0 && !(flags & CLOFF_CHECKPARTIAL))
 			{
-				double distance = self->Distance3D(target);
-				if (distance > range)
+				double distance_squared = self->Distance3DSquared(target);
+
+				if (distance_squared > (range * range) )
 				{
 					ACTION_RETURN_BOOL(false);
 				}

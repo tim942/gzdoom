@@ -1463,7 +1463,7 @@ bool FLevelLocals::CheckSpot (int playernum, FPlayerStart *mthing)
 // [RH] Returns the distance of the closest player to the given mapthing
 double FLevelLocals::PlayersRangeFromSpot (FPlayerStart *spot)
 {
-	double closest = INT_MAX;
+	double closest = DBL_MAX;
 	double distance;
 	int i;
 

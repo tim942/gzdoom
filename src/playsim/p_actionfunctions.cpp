@@ -2459,13 +2459,13 @@ DEFINE_ACTION_FUNCTION(AActor, CheckIfTargetInLOS)
 	{
 		ACTION_RETURN_BOOL(false);
 	}
-	double distance = self->Distance3D(target);
+	double distance_squared = self->Distance3DSquared(target);
 
-	if (dist_max && (distance > dist_max))
+	if (dist_max && (dist_max < 0 || distance_squared > dist_max*dist_max))
 	{
 		ACTION_RETURN_BOOL(false);
 	}
-	if (dist_close && (distance < dist_close))
+	if (dist_close && (dist_close > 0 && distance_squared < dist_close*dist_close))
 	{
 		if (flags & JLOSF_CLOSENOJUMP)
 		{

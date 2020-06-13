@@ -137,6 +137,7 @@ line_t* 		lines;
 TArray<line_t>	loadlines;
 
 int 			numsides;
+static int 		unusedsides;
 side_t* 		sides;
 TArray<side_t>	loadsides;
 
@@ -2170,7 +2171,7 @@ void P_LoadLineDefs (MapData * map)
 		// cph 2006/09/30 - fix sidedef errors right away.
 		for (int j=0; j < 2; j++)
 		{
-			if (LittleShort(mld->sidenum[j]) != NO_INDEX && mld->sidenum[j] >= (unsigned)numsides)
+			if (LittleShort(mld->sidenum[j]) != NO_INDEX && mld->sidenum[j] >= numsides + unusedsides)
 			{
 				mld->sidenum[j] = 0; // dummy sidedef
 				Printf("Linedef %d has a bad sidedef\n", i);
@@ -2197,6 +2198,7 @@ void P_LoadLineDefs (MapData * map)
 		if (level.flags2 & LEVEL2_WRAPMIDTEX) ld->flags |= ML_WRAP_MIDTEX;
 		if (level.flags2 & LEVEL2_CHECKSWITCHRANGE) ld->flags |= ML_CHECKSWITCHRANGE;
 	}
+	unusedsides = 0;
 	delete[] mldf;
 }
 
@@ -2324,7 +2326,8 @@ static void P_AllocateSideDefs (int count)
 	}
 	if (count < numsides)
 	{
-		Printf ("Map has %d unused sidedefs\n", numsides - count);
+		unusedsides = numsides - count;
+		Printf ("Map has %d unused sidedefs\n", unusedsides);
 	}
 	numsides = count;
 	sidecount = 0;

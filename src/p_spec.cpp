@@ -458,7 +458,7 @@ void P_PlayerInSpecialSector (player_t *player, sector_t * sector)
 				player->hazardtype = sector->damagetype;
 				player->hazardinterval = sector->damageinterval;
 			}
-			else if (sector->damageinterval > 0 && level.time % sector->damageinterval == 0)
+			else if (sector->damageinterval != 0 && level.time % sector->damageinterval == 0)
 			{
 				if (!(player->cheats & (CF_GODMODE|CF_GODMODE2))) P_DamageMobj(player->mo, NULL, NULL, sector->damageamount, sector->damagetype);
 				if ((sector->Flags & SECF_ENDLEVEL) && player->health <= 10 && (!deathmatch || !(dmflags & DF_NO_EXIT)))
@@ -474,7 +474,7 @@ void P_PlayerInSpecialSector (player_t *player, sector_t * sector)
 	}
 	else if (sector->damageamount < 0)
 	{
-		if (sector->damageinterval > 0 && level.time % sector->damageinterval == 0)
+		if (sector->damageinterval != 0 && level.time % sector->damageinterval == 0)
 		{
 			P_GiveBody(player->mo, -sector->damageamount, 100);
 		}

@@ -1142,6 +1142,13 @@ OptionValue dehopt
 	2,	"$OPTVAL_ONLYLASTONE"
 }
 
+OptionValue AlwaysTally
+{
+	0,	"$OPTVAL_MODDEFINED"
+	1,	"$OPTVAL_NOTHUBS"
+	2,	"$OPTVAL_WITHHUBS"
+}
+
 OptionMenu "MiscOptions" protected
 {
 	Title "$MISCMNU_TITLE"
@@ -1157,12 +1164,12 @@ OptionMenu "MiscOptions" protected
 	}
 	Option "$MISCMNU_QUERYIWAD",				"queryiwad", "OnOff"
 	StaticText " "
-	Option "$MISCMNU_NOCHEATS",				"nocheats", "OnOff"
+	Option "$MISCMNU_NOCHEATS",					"nocheats", "OnOff"
 	Option "$MISCMNU_ALLCHEATS",				"allcheats", "OnOff"
 	Option "$MISCMNU_ENABLEAUTOSAVES",			"disableautosave", "Autosave"
 	Option "$MISCMNU_SAVELOADCONFIRMATION",		"saveloadconfirmation", "OnOff"
 	Slider "$MISCMNU_AUTOSAVECOUNT",			"autosavecount", 1, 20, 1, 0
-	Option "$MISCMNU_QUICKSAVEROTATION",			"quicksaverotation", "OnOff"
+	Option "$MISCMNU_QUICKSAVEROTATION",		"quicksaverotation", "OnOff"
 	Slider "$MISCMNU_QUICKSAVECOUNT",			"quicksaverotationcount", 1, 20, 1, 0
 	Option "$MISCMNU_DEHLOAD",					"dehload", "dehopt"
 	Option "$MISCMNU_ENABLESCRIPTSCREENSHOTS",	"enablescriptscreenshot", "OnOff"
@@ -1181,6 +1188,8 @@ OptionMenu "MiscOptions" protected
 		Option	"$DSPLYMNU_SHOWENDOOM",			"showendoom", "Endoom"
 	}
 
+	StaticText " "
+	Option "$MISCMNU_ALWAYSTALLY",				"sv_alwaystally", "AlwaysTally"
 	
 }
 

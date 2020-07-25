@@ -132,7 +132,7 @@ CUSTOM_CVAR(Int, gl_lightmode, 3, CVAR_ARCHIVE | CVAR_NOINITCALL)
 	else if ((level.info == nullptr || level.info->lightmode == ELightMode::NotSet)) level.lightmode = (ELightMode)*self;
 }
 
-CVAR(Int, sv_alwaystally, 0, CVAR_ARCHIVE | CVAR_SERVERINFO)
+CVAR(Int, sv_alwaystally, 0, CVAR_SERVERINFO)
 
 static FRandom pr_classchoice ("RandomPlayerClassChoice");
 

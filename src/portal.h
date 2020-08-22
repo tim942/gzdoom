@@ -191,6 +191,11 @@ struct FLinePortal
 	double mCosRot;
 	portnode_t *lineportal_thinglist;
 	FLinePortalSpan *mGroup;
+
+	FLinePortal()
+	{
+		memset(this, 0, sizeof *this);
+	}
 };
 
 struct FLinePortalSpan
@@ -235,6 +240,11 @@ struct FSectorPortal
 	DVector2 mDisplacement;
 	double mPlaneZ;
 	TObjPtr<AActor*> mSkybox;
+
+	FSectorPortal()
+	{
+		memset(this, 0, sizeof * this);
+	}
 
 	bool MergeAllowed() const
 	{

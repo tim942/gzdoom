@@ -1772,8 +1772,11 @@ void G_DoPlayerPop(int playernum)
 
 void G_ScreenShot (const char *filename)
 {
-	shotfile = filename;
-	gameaction = ga_screenshot;
+	if (gameaction == ga_nothing)
+	{
+		shotfile = filename;
+		gameaction = ga_screenshot;
+	}
 }
 
 
@@ -2987,7 +2990,10 @@ DEFINE_ACTION_FUNCTION(FLevelLocals, MakeScreenShot)
 
 void G_MakeAutoSave()
 {
-	gameaction = ga_autosave;
+	if (gameaction == ga_nothing)
+	{
+		gameaction = ga_autosave;
+	}
 }
 
 DEFINE_ACTION_FUNCTION(FLevelLocals, MakeAutoSave)

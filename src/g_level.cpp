@@ -1484,6 +1484,12 @@ int G_FinishTravel ()
 		{
 			pawn->Speed = pawn->GetDefault()->Speed;
 		}
+
+		IFVIRTUALPTRNAME(pawn, NAME_PlayerPawn, Travelled)
+		{
+			VMValue params[1] = { pawn };
+			VMCall(func, params, 1, nullptr, 0);
+		}
 		// [ZZ] we probably don't want to fire any scripts before all players are in, especially with runNow = true.
 		pawns[pawnsnum++] = pawn;
 	}

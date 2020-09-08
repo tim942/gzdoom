@@ -2358,7 +2358,7 @@ static void NewFailure ()
 
 static void FixUnityStatusBar()
 {
-	if (gameinfo.flags & GI_ALWAYSCENTERSBAR)
+	if (gameinfo.flags & GI_FIXUNITYSBAR)
 	{
 		FTexture* sbartex = TexMan.FindTexture("stbar", ETextureType::MiscPatch);
 

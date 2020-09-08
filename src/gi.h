@@ -51,7 +51,7 @@ enum
 	GI_NOTEXTCOLOR			= 0x00000100,	// Chex Quest 3 would have everything green
 	GI_IGNORETITLEPATCHES	= 0x00000200,	// Ignore the map name graphics when not runnning in English language
 	GI_IGNOREBIGFONTLUMP	= 0x00000400,	// Needed for Chex Quest 3, so that the extended internal font can be used instead.
-	GI_ALWAYSCENTERSBAR		= 0x00000800,	// Always center the status bar
+	GI_FIXUNITYSBAR			= 0x00000800,	// Center the status bar if it's too wide for a 320 screen
 };
 
 #include "gametype.h"

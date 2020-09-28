@@ -150,7 +150,7 @@ public:
 	}
 	bool IsPlaying()
 	{
-		return S_GetSoundPlayingInfo (m_Poly, m_CurrentSoundID);
+		return m_CurrentSoundID != 0 && S_GetSoundPlayingInfo (m_Poly, m_CurrentSoundID);
 	}
 	void *Source()
 	{
@@ -179,7 +179,7 @@ public:
 	}
 	bool IsPlaying()
 	{
-		return S_GetSoundPlayingInfo (m_Sector, m_CurrentSoundID);
+		return m_CurrentSoundID != 0 && S_GetSoundPlayingInfo (m_Sector, m_CurrentSoundID);
 	}
 	void *Source()
 	{

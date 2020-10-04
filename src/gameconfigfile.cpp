@@ -65,6 +65,7 @@ EXTERN_CVAR (Color, am_cdwallcolor)
 EXTERN_CVAR (Bool, wi_percents)
 EXTERN_CVAR (Int, gl_texture_hqresizemode)
 EXTERN_CVAR (Int, gl_texture_hqresizemult)
+EXTERN_CVAR(Int, adl_volume_model)
 
 FGameConfigFile::FGameConfigFile ()
 {
@@ -528,6 +529,10 @@ void FGameConfigFile::DoGlobalSetup ()
 						break;
 					}
 				}
+			}
+			if (last < 220)
+			{
+				adl_volume_model = 0;
 			}
 		}
 	}

@@ -238,13 +238,12 @@ struct FLevelLocals : public FLevelData
 	{
 		lightmode = ELightMode::Doom;
 	}
-
-	explicit operator bool() const { return nodes.Size() != 0; }
 };
 
 #ifndef NO_DEFINE_LEVEL
 
 extern FLevelLocals level;
+extern FLevelLocals *currentVMLevel;
 
 inline int vertex_t::Index() const
 {

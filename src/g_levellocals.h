@@ -238,6 +238,8 @@ struct FLevelLocals : public FLevelData
 	{
 		lightmode = ELightMode::Doom;
 	}
+
+	explicit operator bool() const { return nodes.Size() != 0; }
 };
 
 #ifndef NO_DEFINE_LEVEL

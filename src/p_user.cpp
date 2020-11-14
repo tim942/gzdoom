@@ -346,7 +346,6 @@ void player_t::CopyFrom(player_t &p, bool copyPSP)
 	viewz = p.viewz;
 	viewheight = p.viewheight;
 	deltaviewheight = p.deltaviewheight;
-	prevbob = p.prevbob;
 	bob = p.bob;
 	Vel = p.Vel;
 	centering = p.centering;
@@ -1338,7 +1337,7 @@ void P_PlayerThink (player_t *player)
 	player->original_cmd = cmd->ucmd;
 	// Don't interpolate the view for more than one tic
 	player->cheats &= ~CF_INTERPVIEW;
-	player->prevbob = player->bob;
+	player->mo->FloatVar("prevBob") = player->bob;
 
 	IFVIRTUALPTRNAME(player->mo, NAME_PlayerPawn, PlayerThink)
 	{
@@ -1810,7 +1809,6 @@ DEFINE_FIELD_X(PlayerInfo, player_t, FOV)
 DEFINE_FIELD_X(PlayerInfo, player_t, viewz)
 DEFINE_FIELD_X(PlayerInfo, player_t, viewheight)
 DEFINE_FIELD_X(PlayerInfo, player_t, deltaviewheight)
-DEFINE_FIELD_X(PlayerInfo, player_t, prevbob)
 DEFINE_FIELD_X(PlayerInfo, player_t, bob)
 DEFINE_FIELD_X(PlayerInfo, player_t, Vel)
 DEFINE_FIELD_X(PlayerInfo, player_t, centering)

@@ -42,7 +42,7 @@
 #include "m_random.h"
 
 #include "cmdlib.h"
-#include "engineerrors.h"
+#include "doomerrors.h"
 
 #define READBUFFERSIZE	256
 

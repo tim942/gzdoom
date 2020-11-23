@@ -1229,7 +1229,6 @@ FString I_GetLongPathName(const FString &shortpath)
 	return longpath;
 }
 
-#ifdef _WIN32
 //==========================================================================
 //
 // _stat64
@@ -1257,7 +1256,6 @@ int my_wstat64(const wchar_t *path, struct _stat64 *buffer)
 	buffer->st_ctime = (*(uint64_t*)&data.ftCreationTime) / 10000000 - 11644473600LL;
 	return 0;
 }
-#endif
 
 struct NumaNode
 {

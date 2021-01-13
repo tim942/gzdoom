@@ -535,6 +535,7 @@ enum ESkillProperty
 	SKILLP_SlowMonsters,
 	SKILLP_Infight,
 	SKILLP_PlayerRespawn,
+	SKILLP_InstantReaction,
 };
 enum EFSkillProperty	// floating point properties
 {
@@ -578,6 +579,7 @@ struct FSkillInfo
 	int RespawnLimit;
 	double Aggressiveness;
 	int SpawnFilter;
+	bool InstantReaction;
 	int ACSReturn;
 	FString MenuName;
 	FString PicName;

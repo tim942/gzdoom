@@ -65,6 +65,18 @@ pad_start pause
 pad_back menu_main
 lthumb crouch
 
+// PS3 Controller
+joy1 +jump
+joy2 +use
+joy4 +reload
+joy5 weapprev
+joy6 weapnext
+joy7 +altattack
+joy8 +attack
+joy9 quicksave
+joy10 menu_main
+joy12 crouch
+joy13 "toggle cl_run"
 
 /* Default automap bindings */
 mapbind f am_togglefollow

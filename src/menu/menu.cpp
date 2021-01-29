@@ -607,8 +607,7 @@ bool M_Responder (event_t *ev)
 			{
 				// We do our own key repeat handling but still want to eat the
 				// OS's repeated keys.
-				if (CurrentMenu->TranslateKeyboardEvents()) return true;
-				else return CurrentMenu->CallResponder(ev);
+				return true;
 			}
 			else if (ev->subtype == EV_GUI_BackButtonDown || ev->subtype == EV_GUI_BackButtonUp)
 			{
@@ -662,15 +661,12 @@ bool M_Responder (event_t *ev)
 			ch = ev->data1;
 			switch (ch)
 			{
-			case KEY_JOY1:
-			case KEY_JOY3:
-			case KEY_JOY15:
+			case KEY_JOY2:
 			case KEY_PAD_A:
 				mkey = MKEY_Enter;
 				break;
 
-			case KEY_JOY2:
-			case KEY_JOY14:
+			case KEY_JOY1:
 			case KEY_PAD_B:
 				mkey = MKEY_Back;
 				break;
